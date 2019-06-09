@@ -44,6 +44,12 @@ class AuthenticationActivity : FragmentationActivity() {
 
     private val ayanCommonCallingStatus = AyanCommonCallStatus {
         failure {
+            if (it.failureCode == "G00002") {
+                VasUser.removeSession(this@AuthenticationActivity)
+                VasUser.removeUserMobileNumber(this@AuthenticationActivity)
+                finish()
+                startActivity(Intent(this@AuthenticationActivity, AuthenticationActivity::class.java))
+            }
             showNoInternetLayout(it)
         }
         changeStatus {

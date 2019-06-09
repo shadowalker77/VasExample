@@ -8,7 +8,7 @@ class VasUser {
     companion object {
         const val VAS_USER_SESSION = "vasUserSession"
         const val VAS_USER_MOBILE = "vasUserMobile"
-        const val VAS_USER_SUBSCRIBED = "vasUserSubscribed"
+//        const val VAS_USER_SUBSCRIBED = "vasUserSubscribed"
         const val VAS_USER_APPLICATION_UNIQUE_ID = "vasUserApplicationUniqueId"
 
         fun saveSession(context: Context, session: String) {
@@ -46,13 +46,13 @@ class VasUser {
             PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_MOBILE, "")
         }
 
-        fun isUserSubscribed(context: Context): Boolean {
-            return PreferencesManager.getInstance(context).readBooleanFromSharedPreferences(VAS_USER_SUBSCRIBED)
-        }
-
-        fun saveUserSubscribed(context: Context, b: Boolean) {
-            PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_SUBSCRIBED, b)
-        }
+//        fun isUserSubscribed(context: Context): Boolean {
+//            return PreferencesManager.getInstance(context).readBooleanFromSharedPreferences(VAS_USER_SUBSCRIBED)
+//        }
+//
+//        fun saveUserSubscribed(context: Context, b: Boolean) {
+//            PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_SUBSCRIBED, b)
+//        }
 
         private fun createApplicationUniqueId(context: Context) =
             Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
