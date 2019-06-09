@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.2"
     }
 
     buildTypes {
@@ -36,6 +36,6 @@ dependencies {
     implementation 'com.irozon.sneaker:sneaker:1.0.3'
     implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
 
-    implementation project(':inAppPurchase')
-    implementation project(':inAppSDK')
+    compileOnly project(':inAppPurchase')
+    compileOnly project(':inAppSDK')
 }
