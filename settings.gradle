@@ -1,0 +1,1 @@
+include ':app', ':ayanvas', ':inAppPurchase', ':inAppSDK'

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#2064B4</color>
+    <color name="ayanAccent">@color/colorAccent</color>
+    <color name="ayanSliderBack">#fff</color>
+</resources>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/ayanAccent"
+                                            android:clipToPadding="false"
+                                            android:padding="@dimen/ayanMainPadding">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_marginTop="@dimen/ayanMainPadding"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                app:cardMaxElevation="8dp"
+                app:cardPreventCornerOverlap="false">
+
+            <LinearLayout
+                    android:id="@+id/mainContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ayanMainPadding">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ayanMainPadding"
+                        android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/backIv"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_arrow_back"
+                            android:tint="#000"/>
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="24dp"
+                            android:layout_weight="1"/>
+
+                    <ImageView
+                            android:id="@+id/closeIv"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_close"
+                            android:visibility="gone"/>
+                </LinearLayout>
+
+                <TextView
+                        android:id="@+id/descriptionTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ayanMainPadding"
+                        android:gravity="center"
+                        android:text="مرحله آخر: کد پیامک دریافت شده را وارد کنید."
+                        android:textColor="#000"/>
+
+                <EditText
+                        android:id="@+id/activationCodeEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:hint="کد دریافتی"
+                        android:inputType="phone"
+                        android:layout_marginTop="@dimen/ayanRclPadding"
+                        android:maxLines="1"/>
+
+                <TextView
+                        style="@style/ayanVasBtn"
+                        android:id="@+id/nextTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ayanMainPadding"
+                        android:text="تایید و ورود"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+                android:id="@+id/iconCv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="16dp"
+                app:cardMaxElevation="16dp"
+                app:cardPreventCornerOverlap="false">
+
+            <ImageView
+                    android:id="@+id/iconIv"
+                    android:layout_width="@dimen/ayanIconIv"
+                    android:layout_height="@dimen/ayanIconIv"/>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

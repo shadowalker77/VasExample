@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:background="#fff"
+                tools:mainActivity="ir.raha.kafebazaar.activity.IntroductionActivity">
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/countLayout"
+            android:layout_marginBottom="@dimen/ayanMainPadding"/>
+
+    <LinearLayout
+            android:id="@+id/countLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/ayanMainPadding"
+            android:layout_marginLeft="@dimen/ayanMainPadding"
+            android:layout_marginRight="@dimen/ayanMainPadding"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:id="@+id/indicatorsLl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"/>
+
+            <TextView
+                    android:id="@+id/nextTv"
+                    style="@style/ayanVasBtn"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="بعدی"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

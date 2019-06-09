@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="ir.ayantech.ayanvas">
+
+    <application>
+        <activity android:name=".ui.AuthenticationActivity"
+                  android:theme="@style/AuthenticationActivityStyle"
+                  android:windowSoftInputMode="adjustResize">
+        </activity>
+    </application>
+
+</manifest>

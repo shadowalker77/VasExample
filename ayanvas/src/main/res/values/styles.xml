@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AuthenticationActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/iransans</item>
+        <item name="fontFamily">@font/iransans</item>
+    </style>
+
+    <style name="ayanVasBtn">
+        <item name="android:background">@drawable/vas_btn_back</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:minHeight">@dimen/ayanButton</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
