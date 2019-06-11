@@ -33,30 +33,39 @@ And then add this line to module level gradle file:
 ```java
 implementation 'com.github.shadowalker77:vasexample:0.0.4'
 ```
+After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="applicationName">applicationName</string>
+    <string name="applicationType">android</string>
+</resources>
+```
+**Attention:** You don't need to set application type in most of projects. But configuring application name will be needed in all projects.
 # Authentication
 Depends on which language you are coding (JAVA or kotlin) use one of this approaches.
 * JAVA:
 ```java
-new VasAuthentication(context).startSubscription("APP_UNIQUE_TOKEN",  
- new Function1<SubscriptionResult, Unit>() {  
-            @Override  
-    public Unit invoke(SubscriptionResult subscriptionResult) {  
-                if (subscriptionResult == SubscriptionResult.OK)  
-                    Log.d("Subscription", "OK");  
-                else  
-                    Log.d("Subscription", "CANCEL"); 
-                return null;  
-            }  
+new VasAuthentication(context).startSubscription("APP_UNIQUE_TOKEN",
+ new Function1<SubscriptionResult, Unit>() {
+            @Override
+    public Unit invoke(SubscriptionResult subscriptionResult) {
+                if (subscriptionResult == SubscriptionResult.OK)
+                    Log.d("Subscription", "OK");
+                else
+                    Log.d("Subscription", "CANCEL");
+                return null;
+            }
         });
 ```
 In the callback function, subscriptionResult variable determines the result of user subscription.
 * kotlin:
 ```kotlin
-VasAuthentication(context).startSubscription("APP_UNIQUE_TOKEN") {  
-    if (it == SubscriptionResult.OK)  
-        Log.d("Subscription", "OK")  
-    else  
-        Log.d("Subscription", "CANCEL")  
+VasAuthentication(context).startSubscription("APP_UNIQUE_TOKEN") {
+    if (it == SubscriptionResult.OK)
+        Log.d("Subscription", "OK")
+    else
+        Log.d("Subscription", "CANCEL")
 }
 ```
 **Attention:** context in constructor of VasAuthentications class should be activity context.
@@ -80,20 +89,20 @@ VasAuthentication(context).logout()
 For checking user subscription status, use below method:
 * JAVA:
 ```java
-new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {  
-    @Override  
-    public Unit invoke(Boolean aBoolean) {  
-        Log.d("SubscriptionStatus", aBoolean.toString())  
-        return null;  
-    }  
+new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
+    @Override
+    public Unit invoke(Boolean aBoolean) {
+        Log.d("SubscriptionStatus", aBoolean.toString())
+        return null;
+    }
 });
 ```
 **Attention:** aBoolean determines the status of user subscription.
 
 * kotlin:
 ```kotlin
-VasAuthentication(this).isUserSubscribed {  
-    Log.d("SubscriptionStatus", it.toString())  
+VasAuthentication(this).isUserSubscribed {
+    Log.d("SubscriptionStatus", it.toString())
 }
 ```
 **Attention:** it variable is a Boolead which determines the status of user subscription.
