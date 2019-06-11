@@ -17,23 +17,18 @@ import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
 import kotlinx.android.synthetic.main.activity_authentication.*
 
+
 class AuthenticationActivity : FragmentationActivity() {
 
     companion object {
-        private const val VAS_APPLICATION_NAME = "vasApplicationNameTag"
         private const val VAS_APPLICATION_UNIQUE_TOKEN = "vasApplicationUniqueTokenTag"
-        private const val VAS_APPLICATION_TYPE = "vasApplicationTypeTag"
 
         fun getProperIntent(
             context: Context,
-            vasApplicationName: String,
-            vasApplicationUniqueToken: String,
-            vasApplicationType: String
+            vasApplicationUniqueToken: String
         ): Intent {
             val intent = Intent(context, AuthenticationActivity::class.java)
-            intent.putExtra(VAS_APPLICATION_NAME, vasApplicationName)
             intent.putExtra(VAS_APPLICATION_UNIQUE_TOKEN, vasApplicationUniqueToken)
-            intent.putExtra(VAS_APPLICATION_TYPE, vasApplicationType)
             return intent
         }
     }
@@ -124,7 +119,7 @@ class AuthenticationActivity : FragmentationActivity() {
                     VasUser.getApplicationUniqueId(this@AuthenticationActivity),
                     getApplicationUniqueToken(),
                     getApplicationVersion(),
-                    ReportNewDeviceExtraInfo(),
+                    ReportNewDeviceExtraInfo(packageName, getInstalledApps()),
                     getOperatorName()
                 )
                 , hasIdentity = false
@@ -137,9 +132,26 @@ class AuthenticationActivity : FragmentationActivity() {
                     }
                 },
                 EndPoint.ReportEndUserStatus,
-                ReportEndUserStatusInput(getApplicationVersion(), null, getOperatorName())
+                ReportEndUserStatusInput(
+                    getApplicationVersion(), ReportNewDeviceInput(
+                        getApplicationName(),
+                        getApplicationType(),
+                        VasUser.getApplicationUniqueId(this@AuthenticationActivity),
+                        getApplicationUniqueToken(),
+                        getApplicationVersion(),
+                        ReportNewDeviceExtraInfo(packageName, getInstalledApps()),
+                        getOperatorName()
+                    ), getOperatorName()
+                )
             )
         }
+    }
+
+    fun getInstalledApps(): List<String> {
+        val mainIntent = Intent(Intent.ACTION_MAIN, null)
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val pkgAppsList = packageManager.queryIntentActivities(mainIntent, 0)
+        return pkgAppsList.map { it.activityInfo.processName }
     }
 
     fun callGetServiceInfo() {
@@ -165,9 +177,9 @@ class AuthenticationActivity : FragmentationActivity() {
         finish()
     }
 
-    private fun getApplicationName() = intent.getStringExtra(VAS_APPLICATION_NAME)
+    private fun getApplicationName() = resources.getString(R.string.applicationName)
 
-    private fun getApplicationType() = intent.getStringExtra(VAS_APPLICATION_TYPE)
+    private fun getApplicationType() = resources.getString(R.string.applicationType)
 
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 

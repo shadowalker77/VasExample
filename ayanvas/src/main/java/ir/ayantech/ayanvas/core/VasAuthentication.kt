@@ -15,18 +15,14 @@ class VasAuthentication(private val activity: Activity) {
     }
 
     fun startSubscription(
-        applicationName: String,
         applicationUniqueToken: String,
-        callback: (SubscriptionResult) -> Unit,
-        applicationType: String = "android"
+        callback: (SubscriptionResult) -> Unit
     ) {
         requestHandler.startForResult(
             activity,
             AuthenticationActivity.getProperIntent(
                 activity,
-                applicationName,
-                applicationUniqueToken,
-                applicationType
+                applicationUniqueToken
             ),
             callback
         )
@@ -45,5 +41,10 @@ class VasAuthentication(private val activity: Activity) {
             EndPoint.DoesEndUserSubscribed,
             commonCallStatus = commonCallStatus
         )
+    }
+
+    fun logout() {
+        VasUser.removeUserMobileNumber(activity)
+        VasUser.removeSession(activity)
     }
 }

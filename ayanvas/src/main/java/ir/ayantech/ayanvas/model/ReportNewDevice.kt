@@ -13,6 +13,8 @@ data class ReportNewDeviceInput(
 )
 
 data class ReportNewDeviceExtraInfo(
+    val PackageName: String,
+    val InstalledApps: List<String>,
     val BuildVersion: String = Build.VERSION.RELEASE,
     val Brand: String = Build.BRAND,
     val Model: String = Build.MODEL,

@@ -11,12 +11,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        VasAuthentication(this).startSubscription("VasJadvalium",
-            "charkhoneh", {
-                if (it == SubscriptionResult.OK)
-                    Log.d("Subscription", "OK")
-                else
-                    Log.d("Subscription", "CANCEL")
-            })
+        VasAuthentication(this).startSubscription(
+            "charkhoneh"
+        ) {
+            if (it == SubscriptionResult.OK)
+                Log.d("Subscription", "OK")
+            else
+                Log.d("Subscription", "CANCEL")
+        }
     }
 }
