@@ -20,4 +20,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Subscription", "CANCEL")
         }
     }
+
+    fun checkUserSubscription() {
+        VasAuthentication(this).isUserSubscribed {
+            Log.d("SubscriptionStatus", it.toString())
+        }
+    }
 }

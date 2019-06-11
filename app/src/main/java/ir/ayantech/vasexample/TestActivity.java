@@ -25,4 +25,14 @@ public class TestActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void checkUserSubscription() {
+        new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
+            @Override
+            public Unit invoke(Boolean aBoolean) {
+                Log.d("SubscriptionStatus", aBoolean.toString());
+                return null;
+            }
+        });
+    }
 }
