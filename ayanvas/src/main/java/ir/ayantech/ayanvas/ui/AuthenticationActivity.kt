@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.telephony.TelephonyManager
 import android.view.ViewGroup
+import com.google.gson.Gson
 import com.irozon.sneaker.Sneaker
 import ir.ayantech.ayannetworking.api.*
 import ir.ayantech.ayannetworking.ayanModel.Failure
@@ -119,7 +120,7 @@ class AuthenticationActivity : FragmentationActivity() {
                     VasUser.getApplicationUniqueId(this@AuthenticationActivity),
                     getApplicationUniqueToken(),
                     getApplicationVersion(),
-                    ReportNewDeviceExtraInfo(packageName, getInstalledApps()),
+                    ReportNewDeviceExtraInfo(packageName, getInstalledApps(), getApplicationVersion()),
                     getOperatorName()
                 )
                 , hasIdentity = false
@@ -139,7 +140,7 @@ class AuthenticationActivity : FragmentationActivity() {
                         VasUser.getApplicationUniqueId(this@AuthenticationActivity),
                         getApplicationUniqueToken(),
                         getApplicationVersion(),
-                        ReportNewDeviceExtraInfo(packageName, getInstalledApps()),
+                        ReportNewDeviceExtraInfo(packageName, getInstalledApps(), getApplicationVersion()),
                         getOperatorName()
                     ), getOperatorName()
                 )
@@ -147,11 +148,11 @@ class AuthenticationActivity : FragmentationActivity() {
         }
     }
 
-    fun getInstalledApps(): List<String> {
+    fun getInstalledApps(): String {
         val mainIntent = Intent(Intent.ACTION_MAIN, null)
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pkgAppsList = packageManager.queryIntentActivities(mainIntent, 0)
-        return pkgAppsList.map { it.activityInfo.processName }
+        return Gson().toJson(pkgAppsList.map { it.activityInfo.processName })
     }
 
     fun callGetServiceInfo() {
