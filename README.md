@@ -31,7 +31,7 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.0.4'
+implementation 'com.github.shadowalker77:vasexample:0.0.5'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml
@@ -98,6 +98,7 @@ new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
 });
 ```
 **Attention:** aBoolean determines the status of user subscription.
+**Important:** aBoolean may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
 
 * kotlin:
 ```kotlin
@@ -106,6 +107,7 @@ VasAuthentication(this).isUserSubscribed {
 }
 ```
 **Attention:** it variable is a Boolead which determines the status of user subscription.
+**Important:** it variable may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
 # Progurad
 If progurad is enabled for your project, you need to add Retrofit, Gson and OkHttp proguard rules depending of which version you are using. Also, you need to add this line to your proguard file:
 ```java
