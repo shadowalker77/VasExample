@@ -23,7 +23,11 @@ class MainActivity : AppCompatActivity() {
 
     fun checkUserSubscription() {
         VasAuthentication(this).isUserSubscribed {
-            Log.d("SubscriptionStatus", it.toString())
+            when (it) {
+                null -> Log.d("SubscriptionStatus", "checking failed for some reasons")
+                true -> Log.d("SubscriptionStatus", "user is subscribed")
+                false -> Log.d("SubscriptionStatus", "user is not subscribed")
+            }
         }
     }
 }

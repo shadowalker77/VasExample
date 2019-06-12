@@ -3,6 +3,7 @@ package ir.ayantech.ayanvas.core
 import android.app.Activity
 import ir.ayantech.ayannetworking.api.AyanApi
 import ir.ayantech.ayannetworking.api.AyanCallStatus
+import ir.ayantech.ayannetworking.api.AyanCommonCallStatus
 import ir.ayantech.ayanvas.model.DoesEndUserSubscribedOutput
 import ir.ayantech.ayanvas.model.EndPoint
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
@@ -27,7 +28,7 @@ class VasAuthentication(private val activity: Activity) {
         )
     }
 
-    fun isUserSubscribed(callback: (Boolean) -> Unit) {
+    fun isUserSubscribed(callback: (Boolean?) -> Unit) {
         AyanApi(
             { VasUser.getSession(activity) },
             "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
@@ -37,7 +38,12 @@ class VasAuthentication(private val activity: Activity) {
                     callback(it.response?.Parameters?.Subscribed ?: false)
                 }
             },
-            EndPoint.DoesEndUserSubscribed
+            EndPoint.DoesEndUserSubscribed,
+            commonCallStatus = AyanCommonCallStatus {
+                failure {
+                    callback(null)
+                }
+            }
         )
     }
 

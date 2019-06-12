@@ -30,7 +30,9 @@ public class TestActivity extends AppCompatActivity {
         new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
             @Override
             public Unit invoke(Boolean aBoolean) {
-                Log.d("SubscriptionStatus", aBoolean.toString());
+                if (aBoolean == null) Log.d("SubscriptionStatus", "checking failed for some reasons");
+                else if (aBoolean) Log.d("SubscriptionStatus", "user is subscribed");
+                else Log.d("SubscriptionStatus", "user is not subscribed");
                 return null;
             }
         });
