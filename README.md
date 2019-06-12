@@ -98,6 +98,7 @@ new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
 });
 ```
 **Attention:** aBoolean determines the status of user subscription.
+
 **Important:** aBoolean may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
 
 * kotlin:
@@ -107,6 +108,7 @@ VasAuthentication(this).isUserSubscribed {
 }
 ```
 **Attention:** it variable is a Boolead which determines the status of user subscription.
+
 **Important:** it variable may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
 # Progurad
 If progurad is enabled for your project, you need to add Retrofit, Gson and OkHttp proguard rules depending of which version you are using. Also, you need to add this line to your proguard file:
