@@ -12,20 +12,20 @@ import ir.ayantech.ayanvas.helper.loadBase64
 import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.model.Slider
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
-import kotlinx.android.synthetic.main.fragment_introduction.*
-import kotlinx.android.synthetic.main.slide.view.*
+import kotlinx.android.synthetic.main.ayan_vas_fragment_introduction.*
+import kotlinx.android.synthetic.main.ayan_vas_slide.view.*
 
 class IntroductionFragment : FragmentationFragment() {
 
     lateinit var sliders: ArrayList<Slider>
 
-    override fun getLayoutId(): Int = R.layout.fragment_introduction
+    override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_introduction
 
     override fun onCreate() {
         super.onCreate()
         viewPager.adapter = AyanViewPagerAdapter(activity!!, sliders)
         for (slider in sliders) {
-            val indicator = LayoutInflater.from(activity).inflate(R.layout.indicator, rootView as ViewGroup, false)
+            val indicator = LayoutInflater.from(activity).inflate(R.layout.ayan_vas_indicator, rootView as ViewGroup, false)
             indicatorsLl.addView(indicator)
         }
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -59,7 +59,7 @@ class IntroductionFragment : FragmentationFragment() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
 
-            val view = layoutInflater!!.inflate(R.layout.slide, container, false)
+            val view = layoutInflater!!.inflate(R.layout.ayan_vas_slide, container, false)
             if (slides[position].Title.isNullOrEmpty()) view.titleTv.visibility = View.GONE
             view.titleTv.setHtmlText(slides[position].Title)
             view.descriptionTv.setHtmlText(slides[position].Description)

@@ -8,10 +8,10 @@ import ir.ayantech.ayanvas.model.EndPoint
 import ir.ayantech.ayanvas.model.GetOperatorsListOutput
 import ir.ayantech.ayanvas.model.ReportChosenActionInput
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
-import kotlinx.android.synthetic.main.fragment_choose_operator.*
+import kotlinx.android.synthetic.main.ayan_vas_fragment_choose_operator.*
 
 class ChooseOperatorFragment : FragmentationFragment() {
-    override fun getLayoutId(): Int = R.layout.fragment_choose_operator
+    override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_choose_operator
 
     override fun onCreate() {
         super.onCreate()
@@ -25,7 +25,7 @@ class ChooseOperatorFragment : FragmentationFragment() {
                     headerTv.text = it.response?.Parameters?.Header
                     footerTv.text = it.response?.Parameters?.Footer
                     for (operator in it.response?.Parameters?.OperatorsList!!) {
-                        val button = activity?.layoutInflater?.inflate(R.layout.button_operator, null, false)
+                        val button = activity?.layoutInflater?.inflate(R.layout.ayan_vas_button_operator, null, false)
                         button?.findViewById<TextView>(R.id.operatorsTv)?.text = operator.Description
                         button?.setOnClickListener {
                             getAyanApi().ayanCall<Void>(

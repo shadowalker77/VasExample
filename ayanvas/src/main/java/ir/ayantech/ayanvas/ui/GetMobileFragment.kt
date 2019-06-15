@@ -17,14 +17,14 @@ import ir.ayantech.ayanvas.model.GetServiceInfoAction
 import ir.ayantech.ayanvas.model.ReportMtnSubscriptionInput
 import ir.ayantech.ayanvas.model.RequestMciSubscriptionInput
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
-import kotlinx.android.synthetic.main.fragment_get_mobile.*
+import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
 import net.jhoobin.jhub.CharkhoneSdkApp
 
 class GetMobileFragment : FragmentationFragment() {
 
     lateinit var iabHelper: IabHelper
 
-    override fun getLayoutId(): Int = R.layout.fragment_get_mobile
+    override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_get_mobile
 
     override fun onCreate() {
         super.onCreate()

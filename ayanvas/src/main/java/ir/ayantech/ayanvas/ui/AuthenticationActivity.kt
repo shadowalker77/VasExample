@@ -16,7 +16,7 @@ import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.WaiterDialog
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
-import kotlinx.android.synthetic.main.activity_authentication.*
+import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
 
 
 class AuthenticationActivity : FragmentationActivity() {
@@ -101,7 +101,7 @@ class AuthenticationActivity : FragmentationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentication)
+        setContentView(R.layout.ayan_vas_activity_authentication)
         waiterDialog = WaiterDialog(this)
         iconIv.setImageDrawable(getApplicationIcon())
         wp10pbar.showProgressBar()

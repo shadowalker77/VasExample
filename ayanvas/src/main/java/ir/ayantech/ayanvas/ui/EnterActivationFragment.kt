@@ -10,13 +10,13 @@ import ir.ayantech.ayanvas.helper.setOnTextChange
 import ir.ayantech.ayanvas.model.ConfirmMciSubscriptionInput
 import ir.ayantech.ayanvas.model.EndPoint
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
-import kotlinx.android.synthetic.main.fragment_enter_activation.*
+import kotlinx.android.synthetic.main.ayan_vas_fragment_enter_activation.*
 
 class EnterActivationFragment : FragmentationFragment() {
 
     lateinit var mobileNumber: String
 
-    override fun getLayoutId(): Int = R.layout.fragment_enter_activation
+    override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_enter_activation
 
     override fun onCreate() {
         super.onCreate()

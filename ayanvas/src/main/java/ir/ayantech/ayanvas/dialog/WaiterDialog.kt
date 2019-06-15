@@ -16,7 +16,7 @@ class WaiterDialog(context: Context) : Dialog(context) {
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.dialog_waiter)
+        setContentView(R.layout.ayan_vas_dialog_waiter)
         handler = Handler()
         setCancelable(false)
         setCanceledOnTouchOutside(false)
