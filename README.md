@@ -31,7 +31,7 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.0.6'
+implementation 'com.github.shadowalker77:vasexample:0.0.7'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml

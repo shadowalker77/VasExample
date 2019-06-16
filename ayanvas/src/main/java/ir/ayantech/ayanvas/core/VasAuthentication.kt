@@ -29,22 +29,25 @@ class VasAuthentication(private val activity: Activity) {
     }
 
     fun isUserSubscribed(callback: (Boolean?) -> Unit) {
-        AyanApi(
-            { VasUser.getSession(activity) },
-            "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
-        ).ayanCall<DoesEndUserSubscribedOutput>(
-            AyanCallStatus {
-                success {
-                    callback(it.response?.Parameters?.Subscribed ?: false)
+        if (VasUser.getSession(activity).isEmpty())
+            callback(false)
+        else
+            AyanApi(
+                { VasUser.getSession(activity) },
+                "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
+            ).ayanCall<DoesEndUserSubscribedOutput>(
+                AyanCallStatus {
+                    success {
+                        callback(it.response?.Parameters?.Subscribed ?: false)
+                    }
+                },
+                EndPoint.DoesEndUserSubscribed,
+                commonCallStatus = AyanCommonCallStatus {
+                    failure {
+                        callback(null)
+                    }
                 }
-            },
-            EndPoint.DoesEndUserSubscribed,
-            commonCallStatus = AyanCommonCallStatus {
-                failure {
-                    callback(null)
-                }
-            }
-        )
+            )
     }
 
     fun logout() {
