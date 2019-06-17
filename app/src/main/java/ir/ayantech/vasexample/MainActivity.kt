@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        VasAuthentication(this).startSubscription(
+        VasAuthentication(this).start(
             "charkhoneh"
         ) {
             if (it == SubscriptionResult.OK)

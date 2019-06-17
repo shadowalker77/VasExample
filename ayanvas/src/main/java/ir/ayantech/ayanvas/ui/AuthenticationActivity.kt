@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.telephony.TelephonyManager
 import android.view.ViewGroup
+import com.android.billingclient.util.IabHelper
+import com.android.billingclient.util.MarketIntentFactorySDK
 import com.google.gson.Gson
 import com.irozon.sneaker.Sneaker
 import ir.ayantech.ayannetworking.api.*
@@ -17,9 +19,14 @@ import ir.ayantech.ayanvas.dialog.WaiterDialog
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
+import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
+import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
+import net.jhoobin.jhub.CharkhoneSdkApp
 
 
 class AuthenticationActivity : FragmentationActivity() {
+
+    lateinit var iabHelper: IabHelper
 
     companion object {
         private const val VAS_APPLICATION_UNIQUE_TOKEN = "vasApplicationUniqueTokenTag"
@@ -32,6 +39,23 @@ class AuthenticationActivity : FragmentationActivity() {
             intent.putExtra(VAS_APPLICATION_UNIQUE_TOKEN, vasApplicationUniqueToken)
             return intent
         }
+
+        fun getApplicationName(context: Context) = context.resources.getString(R.string.applicationName)
+
+        fun getApplicationType(context: Context) = context.resources.getString(R.string.applicationType)
+
+        fun getApplicationVersion(context: Context) =
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+
+        fun getOperatorName(context: Context) =
+            (context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).networkOperatorName
+
+        fun getInstalledApps(context: Context): String {
+            val mainIntent = Intent(Intent.ACTION_MAIN, null)
+            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+            val pkgAppsList = context.packageManager.queryIntentActivities(mainIntent, 0)
+            return Gson().toJson(pkgAppsList.map { it.activityInfo.processName })
+        }
     }
 
     lateinit var waiterDialog: WaiterDialog
@@ -40,12 +64,6 @@ class AuthenticationActivity : FragmentationActivity() {
 
     private val ayanCommonCallingStatus = AyanCommonCallStatus {
         failure {
-            if (it.failureCode == "G00002") {
-                VasUser.removeSession(this@AuthenticationActivity)
-                VasUser.removeUserMobileNumber(this@AuthenticationActivity)
-                finish()
-                startActivity(Intent(this@AuthenticationActivity, AuthenticationActivity::class.java))
-            }
             showNoInternetLayout(it)
         }
         changeStatus {
@@ -115,44 +133,18 @@ class AuthenticationActivity : FragmentationActivity() {
                 },
                 EndPoint.ReportNewDevice,
                 ReportNewDeviceInput(
-                    getApplicationName(),
-                    getApplicationType(),
+                    getApplicationName(this),
+                    getApplicationType(this),
                     VasUser.getApplicationUniqueId(this@AuthenticationActivity),
                     getApplicationUniqueToken(),
-                    getApplicationVersion(),
-                    ReportNewDeviceExtraInfo(packageName, getInstalledApps(), getApplicationVersion()),
-                    getOperatorName()
+                    getApplicationVersion(this),
+                    ReportNewDeviceExtraInfo(packageName, getInstalledApps(this), getApplicationVersion(this)),
+                    getOperatorName(this)
                 )
                 , hasIdentity = false
             )
-        else {
-            ayanApi.ayanCall<DoesEndUserSubscribedOutput>(
-                AyanCallStatus {
-                    success {
-                        if (it.response?.Parameters?.Subscribed == true) doCallBack(SubscriptionResult.OK) else callGetServiceInfo()
-                    }
-                },
-                EndPoint.ReportEndUserStatus,
-                ReportEndUserStatusInput(
-                    getApplicationVersion(), ReportNewDeviceInput(
-                        getApplicationName(),
-                        getApplicationType(),
-                        VasUser.getApplicationUniqueId(this@AuthenticationActivity),
-                        getApplicationUniqueToken(),
-                        getApplicationVersion(),
-                        ReportNewDeviceExtraInfo(packageName, getInstalledApps(), getApplicationVersion()),
-                        getOperatorName()
-                    ), getOperatorName()
-                )
-            )
-        }
-    }
-
-    fun getInstalledApps(): String {
-        val mainIntent = Intent(Intent.ACTION_MAIN, null)
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val pkgAppsList = packageManager.queryIntentActivities(mainIntent, 0)
-        return Gson().toJson(pkgAppsList.map { it.activityInfo.processName })
+        else
+            callGetServiceInfo()
     }
 
     fun callGetServiceInfo() {
@@ -178,15 +170,63 @@ class AuthenticationActivity : FragmentationActivity() {
         finish()
     }
 
-    private fun getApplicationName() = resources.getString(R.string.applicationName)
-
-    private fun getApplicationType() = resources.getString(R.string.applicationType)
-
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 
-    private fun getApplicationVersion() = packageManager.getPackageInfo(packageName, 0).versionName
+    fun irancellSubscription() {
+        CharkhoneSdkApp.initSdk(
+            applicationContext,
+            getServiceInfo?.response?.Parameters?.Secrets?.toTypedArray()
+        )
+        val fillInIntent = Intent()
+        fillInIntent.putExtra("msisdn", mobileNumberEt.text.toString())
+        fillInIntent.putExtra("editAble", false)
+        iabHelper = IabHelper(
+            this,
+            getServiceInfo?.response?.Parameters?.PublicKeyBase64,
+            MarketIntentFactorySDK(true)
+        )
+        iabHelper.setFillInIntent(fillInIntent)
+        iabHelper.startSetup {
+            if (!it.isSuccess) return@startSetup
+            iabHelper.launchSubscriptionPurchaseFlow(
+                this,
+                getServiceInfo?.response?.Parameters?.Sku,
+                400
+            ) { iabResult, purchase ->
+                if (iabResult.isFailure) {
+                    doCallBack(SubscriptionResult.CANCELED)
+                    return@launchSubscriptionPurchaseFlow
+                }
+                ayanApi.ayanCall<Void>(
+                    AyanCallStatus {
+                        success {
+                            VasUser.saveMobile(this@AuthenticationActivity, mobileNumberEt.text.toString())
+                            doCallBack(SubscriptionResult.OK)
+                        }
+                    },
+                    EndPoint.ReportMtnSubscription,
+                    ReportMtnSubscriptionInput(
+                        purchase.developerPayload,
+                        purchase.isAutoRenewing,
+                        purchase.itemType,
+                        purchase.msisdn,
+                        purchase.orderId,
+                        purchase.originalJson,
+                        purchase.packageName,
+                        purchase.purchaseTime,
+                        purchase.purchaseState,
+                        purchase.signature,
+                        purchase.sku,
+                        purchase.token
+                    )
+                )
+            }
+        }
+    }
 
-    private fun getOperatorName() =
-        (getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).networkOperatorName
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (!iabHelper.handleActivityResult(requestCode, resultCode, data))
+            super.onActivityResult(requestCode, resultCode, data)
+    }
 }
 

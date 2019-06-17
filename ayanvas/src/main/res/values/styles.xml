@@ -2,7 +2,8 @@
 <resources>
     <style name="AuthenticationActivityStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/ayanAccent</item>
+        <item name="colorPrimaryDark">@color/ayanAccent</item>
         <item name="android:fontFamily">@font/iransans</item>
         <item name="fontFamily">@font/iransans</item>
     </style>

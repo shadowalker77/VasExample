@@ -4,8 +4,8 @@ import android.app.Activity
 import ir.ayantech.ayannetworking.api.AyanApi
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayannetworking.api.AyanCommonCallStatus
-import ir.ayantech.ayanvas.model.DoesEndUserSubscribedOutput
-import ir.ayantech.ayanvas.model.EndPoint
+import ir.ayantech.ayannetworking.ayanModel.FailureType
+import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
 
 class VasAuthentication(private val activity: Activity) {
@@ -14,7 +14,7 @@ class VasAuthentication(private val activity: Activity) {
         RequestHandler()
     }
 
-    fun startSubscription(
+    private fun startSubscription(
         applicationUniqueToken: String,
         callback: (SubscriptionResult) -> Unit
     ) {
@@ -26,6 +26,59 @@ class VasAuthentication(private val activity: Activity) {
             ),
             callback
         )
+    }
+
+    fun start(
+        applicationUniqueToken: String,
+        callback: (SubscriptionResult) -> Unit
+    ) {
+        if (VasUser.getSession(activity).isEmpty()) {
+            startSubscription(applicationUniqueToken, callback)
+        } else {
+            AyanApi(
+                { VasUser.getSession(activity) },
+                "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
+            ).ayanCall<DoesEndUserSubscribedOutput>(
+                AyanCallStatus {
+                    success {
+                        if (it.response?.Parameters?.Subscribed == true) {
+                            callback(SubscriptionResult.OK)
+                        } else {
+                            logout()
+                            startSubscription(
+                                applicationUniqueToken,
+                                callback
+                            )
+                        }
+                    }
+                },
+                EndPoint.ReportEndUserStatus,
+                ReportEndUserStatusInput(
+                    AuthenticationActivity.getApplicationVersion(activity), ReportNewDeviceInput(
+                        AuthenticationActivity.getApplicationName(activity),
+                        AuthenticationActivity.getApplicationType(activity),
+                        VasUser.getApplicationUniqueId(activity),
+                        applicationUniqueToken,
+                        AuthenticationActivity.getApplicationVersion(activity),
+                        ReportNewDeviceExtraInfo(
+                            activity.packageName,
+                            AuthenticationActivity.getInstalledApps(activity),
+                            AuthenticationActivity.getApplicationVersion(activity)
+                        ),
+                        AuthenticationActivity.getOperatorName(activity)
+                    ), AuthenticationActivity.getOperatorName(activity)
+                ),
+                commonCallStatus = AyanCommonCallStatus {
+                    failure {
+                        when {
+                            it.failureType == FailureType.NO_INTERNET_CONNECTION -> callback(SubscriptionResult.NO_INTERNET_CONNECTION)
+                            it.failureType == FailureType.TIMEOUT -> callback(SubscriptionResult.TIMEOUT)
+                            else -> callback(SubscriptionResult.UNKNOWN)
+                        }
+                    }
+                }
+            )
+        }
     }
 
     fun isUserSubscribed(callback: (Boolean?) -> Unit) {
@@ -51,6 +104,10 @@ class VasAuthentication(private val activity: Activity) {
     }
 
     fun logout() {
+        AyanApi(
+            { VasUser.getSession(activity) },
+            "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
+        ).ayanCall<Void>(AyanCallStatus {  }, EndPoint.ReportUnsubscription)
         VasUser.removeUserMobileNumber(activity)
         VasUser.removeSession(activity)
     }

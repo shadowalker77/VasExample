@@ -13,7 +13,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new VasAuthentication(this).startSubscription("social",
+        new VasAuthentication(this).start("social",
                 new Function1<SubscriptionResult, Unit>() {
                     @Override
                     public Unit invoke(SubscriptionResult subscriptionResult) {
