@@ -14,10 +14,13 @@ class MainActivity : AppCompatActivity() {
         VasAuthentication(this).start(
             "charkhoneh"
         ) {
-            if (it == SubscriptionResult.OK)
-                Log.d("Subscription", "OK")
-            else
-                Log.d("Subscription", "CANCEL")
+            when (it) {
+                SubscriptionResult.OK ->  Log.d("Subscription", "OK")
+                SubscriptionResult.CANCELED ->  Log.d("Subscription", "CANCELED")
+                SubscriptionResult.NO_INTERNET_CONNECTION ->  Log.d("Subscription", "NO_INTERNET_CONNECTION")
+                SubscriptionResult.TIMEOUT ->  Log.d("Subscription", "TIMEOUT")
+                SubscriptionResult.UNKNOWN ->  Log.d("Subscription", "UNKNOWN")
+            }
         }
     }
 

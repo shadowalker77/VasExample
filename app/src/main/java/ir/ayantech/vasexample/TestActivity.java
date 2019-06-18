@@ -17,10 +17,17 @@ public class TestActivity extends AppCompatActivity {
                 new Function1<SubscriptionResult, Unit>() {
                     @Override
                     public Unit invoke(SubscriptionResult subscriptionResult) {
-                        if (subscriptionResult == SubscriptionResult.OK)
+                        if (SubscriptionResult.OK == subscriptionResult) {
                             Log.d("Subscription", "OK");
-                        else
-                            Log.d("Subscription", "CANCEL");
+                        } else if (SubscriptionResult.CANCELED == subscriptionResult) {
+                            Log.d("Subscription", "CANCELED");
+                        } else if (SubscriptionResult.NO_INTERNET_CONNECTION == subscriptionResult) {
+                            Log.d("Subscription", "NO_INTERNET_CONNECTION");
+                        } else if (SubscriptionResult.TIMEOUT == subscriptionResult) {
+                            Log.d("Subscription", "TIMEOUT");
+                        } else if (SubscriptionResult.UNKNOWN == subscriptionResult) {
+                            Log.d("Subscription", "UNKNOWN");
+                        }
                         return null;
                     }
                 });
