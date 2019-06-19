@@ -2,5 +2,5 @@
 <resources>
     <color name="colorAccent">#2064B4</color>
     <color name="ayanAccent">@color/colorAccent</color>
-    <color name="ayanSliderBack">#fff</color>
+    <color name="ayanSliderBack">@color/ayanAccent</color>
 </resources>

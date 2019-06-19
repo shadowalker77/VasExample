@@ -38,18 +38,16 @@ class VasAuthentication(private val activity: Activity) {
             AyanApi(
                 { VasUser.getSession(activity) },
                 "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
-            ).ayanCall<DoesEndUserSubscribedOutput>(
+            ).ayanCall<ReportEndUserStatusOutput>(
                 AyanCallStatus {
                     success {
-                        if (it.response?.Parameters?.Subscribed == true) {
-                            callback(SubscriptionResult.OK)
-                        } else {
+                        if (it.response?.Parameters?.RegistrationStatus == "NotCompleted")
+                            startSubscription(applicationUniqueToken, callback)
+                        else if (it.response?.Parameters?.RegistrationStatus == "Completed" && it.response?.Parameters?.Subscribed == false) {
                             logout()
-                            startSubscription(
-                                applicationUniqueToken,
-                                callback
-                            )
-                        }
+                            startSubscription(applicationUniqueToken, callback)
+                        } else if (it.response?.Parameters?.Subscribed == true)
+                            callback(SubscriptionResult.OK)
                     }
                 },
                 EndPoint.ReportEndUserStatus,
@@ -107,7 +105,7 @@ class VasAuthentication(private val activity: Activity) {
         AyanApi(
             { VasUser.getSession(activity) },
             "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
-        ).ayanCall<Void>(AyanCallStatus {  }, EndPoint.ReportUnsubscription)
+        ).ayanCall<Void>(AyanCallStatus { }, EndPoint.ReportUnsubscription)
         VasUser.removeUserMobileNumber(activity)
         VasUser.removeSession(activity)
     }

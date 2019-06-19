@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         VasAuthentication(this).start(
-            "charkhoneh"
+            "socailmedia1"
         ) {
             when (it) {
                 SubscriptionResult.OK ->  Log.d("Subscription", "OK")

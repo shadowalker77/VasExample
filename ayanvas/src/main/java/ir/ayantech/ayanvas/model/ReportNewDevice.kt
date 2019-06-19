@@ -5,7 +5,7 @@ import android.os.Build
 data class ReportNewDeviceInput(
     val ApplicationName: String,
     val ApplicationType: String,
-    val ApplicationUniqueID: String,
+    val UniqueID: String,
     val ApplicationUniqueToken: String,
     val ApplicationVersion: String,
     val ExtraInfo: ReportNewDeviceExtraInfo,

@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayanvas.R
+import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.model.EndPoint
 import ir.ayantech.ayanvas.model.GetOperatorsListOutput
 import ir.ayantech.ayanvas.model.ReportChosenActionInput
@@ -26,12 +27,12 @@ class ChooseOperatorFragment : FragmentationFragment() {
                     footerTv.text = it.response?.Parameters?.Footer
                     for (operator in it.response?.Parameters?.OperatorsList!!) {
                         val button = activity?.layoutInflater?.inflate(R.layout.ayan_vas_button_operator, null, false)
-                        button?.findViewById<TextView>(R.id.operatorsTv)?.text = operator.Description
+                        button?.findViewById<TextView>(R.id.operatorsTv)?.setHtmlText(operator.Description)
                         button?.setOnClickListener {
                             getAyanApi().ayanCall<Void>(
                                 AyanCallStatus {
                                     success {
-                                        (activity as AuthenticationActivity).callGetServiceInfo()
+                                        (activity as AuthenticationActivity).restart()
                                     }
                                 },
                                 EndPoint.ReportChosenAction,

@@ -62,14 +62,28 @@
                     android:inputType="phone"
                     android:maxLines="1"/>
 
-            <TextView
-                    style="@style/ayanVasBtn"
-                    android:id="@+id/nextTv"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ayanMainPadding"
-                    android:text="ثبت نام"/>
+                    android:orientation="horizontal">
 
+                <ImageView
+                        android:id="@+id/chooseOperatorIv"
+                        android:layout_width="@dimen/ayanButton"
+                        android:layout_height="@dimen/ayanButton"
+                        android:layout_marginRight="@dimen/ayanMainPadding"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/ayanAccent"/>
+
+                <TextView
+                        style="@style/ayanVasBtn"
+                        android:id="@+id/nextTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ثبت نام"/>
+            </LinearLayout>
             <TextView
                     android:id="@+id/showAgreementTv"
                     android:layout_width="match_parent"
@@ -77,14 +91,6 @@
                     android:gravity="center"
                     android:layout_marginTop="@dimen/ayanMainPadding"
                     android:textColor="#000"/>
-
-            <TextView
-                    style="@style/ayanVasBtn"
-                    android:id="@+id/chooseOperatorTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ayanMainPadding"
-                    android:text="انتخاب اپراتور"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

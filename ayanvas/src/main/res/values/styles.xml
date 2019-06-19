@@ -10,7 +10,7 @@
 
     <style name="ayanVasBtn">
         <item name="android:background">@drawable/vas_btn_back</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">#000</item>
         <item name="android:minHeight">@dimen/ayanButton</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>

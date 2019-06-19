@@ -5,3 +5,8 @@ data class ReportEndUserStatusInput(
     val ExtraInfo: Any?,
     val OperatorName: String
 )
+
+data class ReportEndUserStatusOutput(
+    val RegistrationStatus: String,
+    val Subscribed: Boolean
+)

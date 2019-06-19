@@ -11,10 +11,13 @@ import ir.ayantech.ayanvas.model.ConfirmMciSubscriptionInput
 import ir.ayantech.ayanvas.model.EndPoint
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_enter_activation.*
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
 
 class EnterActivationFragment : FragmentationFragment() {
 
     lateinit var mobileNumber: String
+    private var guideView: GuideView? = null
 
     override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_enter_activation
 
@@ -24,7 +27,7 @@ class EnterActivationFragment : FragmentationFragment() {
         with(getResponseOfGetServiceInfo()!!) {
             iconIv.loadBase64(ImageBase64)
             descriptionTv.setHtmlText(SecondPageContent)
-            nextTv.text = SecondPageButton
+            nextTv.setHtmlText(SecondPageButton)
             activationCodeEt.setOnTextChange { if (it.length == 4) hideSoftInput() }
             nextTv.setOnClickListener {
                 getAyanApi().ayanCall<Void>(
@@ -39,5 +42,25 @@ class EnterActivationFragment : FragmentationFragment() {
                 )
             }
         }
+    }
+
+    fun keyboardStatusHandler(it: Boolean) {
+        if (it) {
+            try {
+                guideView = GuideView.Builder(activity)
+                    .setContentText("کد فعال‌سازی دریافتی را وارد کنید")
+                    .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
+                    .setTargetView(activationCodeEt)
+                    .setContentTextSize(14)//optional
+                    .build()
+                guideView?.show()
+            } catch (e: Exception) {
+            }
+        } else
+            try {
+                guideView?.dismiss()
+                guideView = null
+            } catch (e: Exception) {
+            }
     }
 }

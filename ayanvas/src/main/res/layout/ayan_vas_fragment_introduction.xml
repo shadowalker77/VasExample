@@ -5,7 +5,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                android:background="#fff"
+                android:background="@color/ayanSliderBack"
                 tools:mainActivity="ir.raha.kafebazaar.activity.IntroductionActivity">
 
     <android.support.v4.view.ViewPager
@@ -42,8 +42,18 @@
                     android:id="@+id/nextTv"
                     style="@style/ayanVasBtn"
                     android:layout_width="80dp"
+                    android:textColor="#fff"
                     android:layout_height="wrap_content"
                     android:text="بعدی"/>
+
+            <TextView
+                    android:id="@+id/prevTv"
+                    style="@style/ayanVasBtn"
+                    android:layout_width="80dp"
+                    android:textColor="#fff"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:text="قبلی"/>
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

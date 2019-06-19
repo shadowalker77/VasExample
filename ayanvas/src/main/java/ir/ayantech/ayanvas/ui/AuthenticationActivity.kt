@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
 import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
 import net.jhoobin.jhub.CharkhoneSdkApp
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
 class AuthenticationActivity : FragmentationActivity() {
@@ -123,6 +124,12 @@ class AuthenticationActivity : FragmentationActivity() {
         waiterDialog = WaiterDialog(this)
         iconIv.setImageDrawable(getApplicationIcon())
         wp10pbar.showProgressBar()
+        KeyboardVisibilityEvent.setEventListener(this) {
+            if (topFragment is EnterActivationFragment)
+                (topFragment as EnterActivationFragment).keyboardStatusHandler(it)
+            else if (topFragment is GetMobileFragment)
+                (topFragment as GetMobileFragment).keyboardStatusHandler(it)
+        }
         if (VasUser.getSession(this).isEmpty())
             ayanApi.ayanCall<ReportNewDeviceOutput>(
                 AyanCallStatus {
@@ -222,6 +229,11 @@ class AuthenticationActivity : FragmentationActivity() {
                 )
             }
         }
+    }
+
+    fun restart() {
+        this.finish()
+        startActivity(getProperIntent(this, getApplicationUniqueToken()))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

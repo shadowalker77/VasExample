@@ -23,10 +23,14 @@ class IntroductionFragment : FragmentationFragment() {
 
     override fun onCreate() {
         super.onCreate()
-        viewPager.adapter = AyanViewPagerAdapter(activity!!, sliders)
+        viewPager.adapter = AyanViewPagerAdapter(activity!!, sliders.reversed() as ArrayList<Slider>)
         for (slider in sliders) {
-            val indicator = LayoutInflater.from(activity).inflate(R.layout.ayan_vas_indicator, rootView as ViewGroup, false)
+            val indicator =
+                LayoutInflater.from(activity).inflate(R.layout.ayan_vas_indicator, rootView as ViewGroup, false)
             indicatorsLl.addView(indicator)
+        }
+        prevTv.setOnClickListener {
+            viewPager.currentItem = viewPager.currentItem + 1
         }
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {}
@@ -40,6 +44,7 @@ class IntroductionFragment : FragmentationFragment() {
                     nextTv.text = "شروع"
                     nextTv.setOnClickListener { start(GetMobileFragment()) }
                 } else {
+                    prevTv.visibility = if (p0 == sliders.size - 1) View.GONE else View.VISIBLE
                     nextTv.text = "بعدی"
                     nextTv.setOnClickListener { viewPager.currentItem = viewPager.currentItem - 1 }
                 }
