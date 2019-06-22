@@ -185,11 +185,11 @@ class AuthenticationActivity : FragmentationActivity() {
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 
     fun irancellSubscription() {
-        AccountUtil.removeAccount()
         CharkhoneSdkApp.initSdk(
             applicationContext,
             getServiceInfo?.response?.Parameters?.Secrets?.toTypedArray()
         )
+        AccountUtil.removeAccount()
         val fillInIntent = Intent()
         fillInIntent.putExtra("msisdn", mobileNumberEt.text.toString())
         fillInIntent.putExtra("editAble", false)

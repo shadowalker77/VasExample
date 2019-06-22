@@ -2,8 +2,8 @@
 <resources>
     <dimen name="ayanMainPadding">16dp</dimen>
     <dimen name="ayanRclPadding">16dp</dimen>
-    <dimen name="ayanIconIv">80dp</dimen>
-    <dimen name="ayanIconIvGap">70dp</dimen>
+    <dimen name="ayanIconIv">120dp</dimen>
+    <dimen name="ayanIconIvGap">110dp</dimen>
     <dimen name="ayanButton">40dp</dimen>
     <dimen name="ayanCardPadding">4dp</dimen>
 </resources>

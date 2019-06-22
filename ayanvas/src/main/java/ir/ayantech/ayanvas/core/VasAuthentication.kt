@@ -109,6 +109,5 @@ class VasAuthentication(private val activity: Activity) {
         ).ayanCall<Void>(AyanCallStatus { }, EndPoint.ReportUnsubscription)
         VasUser.removeUserMobileNumber(activity)
         VasUser.removeSession(activity)
-        AccountUtil.removeAccount()
     }
 }
