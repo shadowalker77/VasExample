@@ -13,6 +13,7 @@ import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_enter_activation.*
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 class EnterActivationFragment : FragmentationFragment() {
 
@@ -45,22 +46,24 @@ class EnterActivationFragment : FragmentationFragment() {
     }
 
     fun keyboardStatusHandler(it: Boolean) {
-        if (it) {
-            try {
-                guideView = GuideView.Builder(activity)
-                    .setContentText("کد فعال‌سازی دریافتی را وارد کنید")
-                    .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
-                    .setTargetView(activationCodeEt)
-                    .setContentTextSize(14)//optional
-                    .build()
-                guideView?.show()
-            } catch (e: Exception) {
-            }
-        } else
-            try {
-                guideView?.dismiss()
-                guideView = null
-            } catch (e: Exception) {
-            }
+        if (getResponseOfGetServiceInfo()?.ActivationCodeInputHint != null)
+            if (it) {
+                try {
+                    guideView = GuideView.Builder(activity)
+                        .setContentText(getResponseOfGetServiceInfo()?.ActivationCodeInputHint)
+                        .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
+                        .setTargetView(activationCodeEt)
+                        .setGravity(Gravity.auto)
+                        .setContentTextSize(14)//optional
+                        .build()
+                    guideView?.show()
+                } catch (e: Exception) {
+                }
+            } else
+                try {
+                    guideView?.dismiss()
+                    guideView = null
+                } catch (e: Exception) {
+                }
     }
 }

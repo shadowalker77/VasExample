@@ -8,6 +8,8 @@ data class GetServiceInfoOutput(
     val AgreementLabel: String?,
     val AgreementTitle: String?,
     val CanChangeOperator: Boolean,
+    val MobileNumberInputHint: String?,
+    val ActivationCodeInputHint: String?,
     val FirstPageButton: String,
     val FirstPageContent: String,
     val HeadNumber: String,

@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
 import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
 import net.jhoobin.jhub.CharkhoneSdkApp
+import net.jhoobin.jhub.util.AccountUtil
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
@@ -184,6 +185,7 @@ class AuthenticationActivity : FragmentationActivity() {
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 
     fun irancellSubscription() {
+        AccountUtil.removeAccount()
         CharkhoneSdkApp.initSdk(
             applicationContext,
             getServiceInfo?.response?.Parameters?.Secrets?.toTypedArray()

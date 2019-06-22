@@ -14,6 +14,7 @@ import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 
 class GetMobileFragment : FragmentationFragment() {
@@ -65,23 +66,25 @@ class GetMobileFragment : FragmentationFragment() {
     }
 
     fun keyboardStatusHandler(it: Boolean) {
-        if (it) {
-            try {
-                guideView = GuideView.Builder(activity)
-                    .setContentText("شماره همراه خود را وارد کنید")
-                    .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
-                    .setTargetView(mobileNumberEt)
-                    .setContentTextSize(14)//optional
-                    .build()
-                guideView?.show()
-            } catch (e: Exception) {
-            }
-        } else
-            try {
-                guideView?.dismiss()
-                guideView = null
-            } catch (e: Exception) {
+        if (getResponseOfGetServiceInfo()?.MobileNumberInputHint != null)
+            if (it) {
+                try {
+                    guideView = GuideView.Builder(activity)
+                        .setContentText(getResponseOfGetServiceInfo()?.MobileNumberInputHint)
+                        .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
+                        .setTargetView(mobileNumberEt)
+                        .setGravity(Gravity.auto)
+                        .setContentTextSize(14)//optional
+                        .build()
+                    guideView?.show()
+                } catch (e: Exception) {
+                }
+            } else
+                try {
+                    guideView?.dismiss()
+                    guideView = null
+                } catch (e: Exception) {
 
-            }
+                }
     }
 }

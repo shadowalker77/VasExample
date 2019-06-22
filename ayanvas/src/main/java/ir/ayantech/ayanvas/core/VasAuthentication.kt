@@ -7,6 +7,7 @@ import ir.ayantech.ayannetworking.api.AyanCommonCallStatus
 import ir.ayantech.ayannetworking.ayanModel.FailureType
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
+import net.jhoobin.jhub.util.AccountUtil
 
 class VasAuthentication(private val activity: Activity) {
 
@@ -108,5 +109,6 @@ class VasAuthentication(private val activity: Activity) {
         ).ayanCall<Void>(AyanCallStatus { }, EndPoint.ReportUnsubscription)
         VasUser.removeUserMobileNumber(activity)
         VasUser.removeSession(activity)
+        AccountUtil.removeAccount()
     }
 }
