@@ -60,7 +60,7 @@
                         android:id="@+id/descriptionTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/ayanMainPadding"
+                        android:layout_marginTop="@dimen/ayanIconIvGap"
                         android:gravity="center"
                         android:text="مرحله آخر: کد پیامک دریافت شده را وارد کنید."
                         android:textColor="#000"/>
