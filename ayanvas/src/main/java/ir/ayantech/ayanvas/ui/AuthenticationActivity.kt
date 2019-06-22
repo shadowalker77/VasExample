@@ -160,6 +160,10 @@ class AuthenticationActivity : FragmentationActivity() {
                 success {
                     when {
                         it.response?.Parameters?.Action == GetServiceInfoAction.NOTHING -> doCallBack(SubscriptionResult.OK)
+                        it.response?.Parameters?.Action == GetServiceInfoAction.CHOOSE_OPERATOR -> loadRootFragment(
+                            R.id.fragmentContainerFl,
+                            ChooseOperatorFragment()
+                        )
                         it.response?.Parameters?.ShowSliders == true -> loadRootFragment(
                             R.id.fragmentContainerFl,
                             IntroductionFragment().also { frag -> frag.sliders = it.response?.Parameters?.Sliders!! }

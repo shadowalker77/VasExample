@@ -5,22 +5,28 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import ir.ayantech.ayanvas.core.SubscriptionResult
 import ir.ayantech.ayanvas.core.VasAuthentication
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        VasAuthentication(this).start(
-            "socailmedia1"
-        ) {
-            when (it) {
-                SubscriptionResult.OK ->  Log.d("Subscription", "OK")
-                SubscriptionResult.CANCELED ->  Log.d("Subscription", "CANCELED")
-                SubscriptionResult.NO_INTERNET_CONNECTION ->  Log.d("Subscription", "NO_INTERNET_CONNECTION")
-                SubscriptionResult.TIMEOUT ->  Log.d("Subscription", "TIMEOUT")
-                SubscriptionResult.UNKNOWN ->  Log.d("Subscription", "UNKNOWN")
+        startBtn.setOnClickListener {
+            VasAuthentication(this).start(
+                uniqueTokenEt.text.toString()
+            ) {
+                when (it) {
+                    SubscriptionResult.OK -> Log.d("Subscription", "OK")
+                    SubscriptionResult.CANCELED -> Log.d("Subscription", "CANCELED")
+                    SubscriptionResult.NO_INTERNET_CONNECTION -> Log.d("Subscription", "NO_INTERNET_CONNECTION")
+                    SubscriptionResult.TIMEOUT -> Log.d("Subscription", "TIMEOUT")
+                    SubscriptionResult.UNKNOWN -> Log.d("Subscription", "UNKNOWN")
+                }
             }
+        }
+        logoutBtn.setOnClickListener {
+            VasAuthentication(this).logout()
         }
     }
 
