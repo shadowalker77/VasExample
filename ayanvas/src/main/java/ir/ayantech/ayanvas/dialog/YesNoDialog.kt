@@ -18,7 +18,7 @@ class YesNoDialog(context: Context, title: String?, message: String) : Dialog(co
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.ayan_vas_dialog_yes_no)
 
-        if (title == null) titleTv.visibility = View.GONE else titleTv.text = title
+        if (title == null) titleTv.visibility = View.GONE else titleTv.setHtmlText(title)
         messageTv.setHtmlText(message)
     }
 
@@ -31,11 +31,11 @@ class YesNoDialog(context: Context, title: String?, message: String) : Dialog(co
     }
 
     fun setNegativeText(text: String) {
-        negativeTv.text = text
+        negativeTv.setHtmlText(text)
     }
 
     fun setPositiveText(text: String) {
-        positiveTv.text = text
+        positiveTv.setHtmlText(text)
     }
 
     fun removeNegativeButton() {

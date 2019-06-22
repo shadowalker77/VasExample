@@ -16,23 +16,24 @@
     <ScrollView
             android:id="@+id/messageSv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ayanRclPadding"
+            android:layout_below="@+id/titleTv"
+            android:layout_above="@+id/buttonLl">
 
         <TextView
                 android:id="@+id/messageTv"
                 android:autoLink="web"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/titleTv"
-                android:layout_marginTop="@dimen/ayanRclPadding"
                 android:textColor="#000"/>
     </ScrollView>
 
     <LinearLayout
+            android:id="@+id/buttonLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/messageSv"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/ayanMainPadding">
 
         <TextView
