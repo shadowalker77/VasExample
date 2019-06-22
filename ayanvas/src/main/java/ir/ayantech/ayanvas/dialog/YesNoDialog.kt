@@ -8,17 +8,17 @@ import ir.ayantech.ayanvas.R
 import ir.ayantech.ayanvas.helper.setHtmlText
 import kotlinx.android.synthetic.main.ayan_vas_dialog_yes_no.*
 
-class YesNoDialog(context: Context, title: String, message: String) : Dialog(context) {
+class YesNoDialog(context: Context, title: String?, message: String) : Dialog(context) {
 
     init {
         initialize(context, title, message)
     }
 
-    private fun initialize(context: Context, title: String, message: String) {
+    private fun initialize(context: Context, title: String?, message: String) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.ayan_vas_dialog_yes_no)
 
-        titleTv.text = title
+        if (title == null) titleTv.visibility = View.GONE else titleTv.text = title
         messageTv.setHtmlText(message)
     }
 

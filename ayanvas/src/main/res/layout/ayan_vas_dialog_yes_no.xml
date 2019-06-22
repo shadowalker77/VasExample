@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/ayanMainPadding">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/ayanMainPadding">
 
     <TextView
-        android:id="@+id/titleTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textColor="#000"
-        android:textSize="24sp" />
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#000"
+            android:textSize="24sp"/>
 
-    <TextView
-        android:id="@+id/messageTv"
-        android:autoLink="web"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/titleTv"
-        android:layout_marginTop="@dimen/ayanRclPadding"
-        android:textColor="#000" />
+    <ScrollView
+            android:id="@+id/messageSv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/messageTv"
+                android:autoLink="web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/titleTv"
+                android:layout_marginTop="@dimen/ayanRclPadding"
+                android:textColor="#000"/>
+    </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/messageTv"
-        android:layout_marginTop="@dimen/ayanMainPadding">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/messageSv"
+            android:layout_marginTop="@dimen/ayanMainPadding">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/ayanAccent"
-            android:text="خیر"
-            android:layout_marginRight="32dp"
-            android:textSize="20sp"
-            android:id="@+id/negativeTv" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ayanAccent"
+                android:text="خیر"
+                android:layout_marginRight="32dp"
+                android:textSize="20sp"
+                android:id="@+id/negativeTv"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/ayanAccent"
-            android:text="بله"
-            android:textSize="20sp"
-            android:id="@+id/positiveTv" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ayanAccent"
+                android:text="بله"
+                android:textSize="20sp"
+                android:id="@+id/positiveTv"/>
     </LinearLayout>
-
 </RelativeLayout>

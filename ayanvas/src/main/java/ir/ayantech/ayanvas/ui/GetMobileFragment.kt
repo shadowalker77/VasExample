@@ -35,9 +35,9 @@ class GetMobileFragment : FragmentationFragment() {
             nextTv.setHtmlText(FirstPageButton)
             if (PriceText.isNullOrEmpty()) priceTv.visibility = View.GONE else priceTv.text = PriceText
             showAgreementTv.setOnClickListener {
-                val yesNoDialog = YesNoDialog(activity!!, "قوانین و مقررات", AgreementContent)
+                val yesNoDialog = YesNoDialog(activity!!, AgreementTitle, AgreementContent)
                 yesNoDialog.removeNegativeButton()
-                yesNoDialog.setPositiveText("باشه")
+                yesNoDialog.setPositiveText(AgreementButton)
                 yesNoDialog.setPositiveAction(View.OnClickListener { yesNoDialog.dismiss() })
                 yesNoDialog.show()
             }
