@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.telephony.TelephonyManager
 import android.view.ViewGroup
 import com.android.billingclient.util.IabHelper
@@ -14,6 +15,7 @@ import ir.ayantech.ayannetworking.api.*
 import ir.ayantech.ayannetworking.ayanModel.Failure
 import ir.ayantech.ayanvas.R
 import ir.ayantech.ayanvas.core.SubscriptionResult
+import ir.ayantech.ayanvas.core.VasAuthentication
 import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.WaiterDialog
 import ir.ayantech.ayanvas.model.*
@@ -243,8 +245,8 @@ internal class AuthenticationActivity : FragmentationActivity() {
     }
 
     fun restart() {
+        setResult(88858)
         this.finish()
-        startActivity(getProperIntent(this, getApplicationUniqueToken()))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

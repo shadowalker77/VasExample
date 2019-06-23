@@ -10,23 +10,21 @@ import ir.ayantech.ayanvas.ui.AuthenticationActivity
 
 internal class VasAuthentication {
 
-    private val requestHandler: RequestHandler by lazy {
-        RequestHandler()
-    }
+    lateinit var requestHandler: RequestHandler
 
     private fun startSubscription(
         activity: Activity,
         applicationUniqueToken: String,
         callback: (SubscriptionResult) -> Unit
     ) {
-        requestHandler.startForResult(
-            activity,
-            AuthenticationActivity.getProperIntent(
+        requestHandler = RequestHandler(
+            activity, AuthenticationActivity.getProperIntent(
                 activity,
                 applicationUniqueToken
             ),
             callback
         )
+        requestHandler.startForResult()
     }
 
     fun start(

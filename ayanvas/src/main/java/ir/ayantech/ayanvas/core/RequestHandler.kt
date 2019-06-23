@@ -4,12 +4,13 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
 
-internal class RequestHandler {
+internal class RequestHandler(
+    val activity: Activity,
+    val intent: Intent,
+    val callback: (SubscriptionResult) -> Unit
+) {
 
     fun startForResult(
-        activity: Activity,
-        intent: Intent,
-        callback: (SubscriptionResult) -> Unit
     ) {
         getRequestFragment(activity)?.startForResult(intent, callback)
             ?: callback(SubscriptionResult.CANCELED)
@@ -26,6 +27,7 @@ internal class RequestHandler {
                 .add(requestFragment, REQUEST_FRAGMENT_TAG)
                 .commitAllowingStateLoss()
             activity.fragmentManager.executePendingTransactions()
+            requestFragment.requestHandler = this
             requestFragment
         } else {
             requestFragment
@@ -38,6 +40,8 @@ internal class RequestHandler {
 
     class RequestFragment : Fragment() {
 
+        lateinit var requestHandler: RequestHandler
+
         private var callback: ((SubscriptionResult) -> Unit)? = null
 
         fun startForResult(intent: Intent, callback: (SubscriptionResult) -> Unit) {
@@ -46,6 +50,10 @@ internal class RequestHandler {
         }
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            if (resultCode == 88858) {
+                requestHandler.startForResult()
+                return
+            }
             callback?.invoke(SubscriptionResult.from(resultCode))
             callback = null
         }
