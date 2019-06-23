@@ -7,15 +7,15 @@ import ir.ayantech.ayannetworking.api.AyanCommonCallStatus
 import ir.ayantech.ayannetworking.ayanModel.FailureType
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
-import net.jhoobin.jhub.util.AccountUtil
 
-class VasAuthentication(private val activity: Activity) {
+internal class VasAuthentication {
 
     private val requestHandler: RequestHandler by lazy {
         RequestHandler()
     }
 
     private fun startSubscription(
+        activity: Activity,
         applicationUniqueToken: String,
         callback: (SubscriptionResult) -> Unit
     ) {
@@ -30,11 +30,12 @@ class VasAuthentication(private val activity: Activity) {
     }
 
     fun start(
+        activity: Activity,
         applicationUniqueToken: String,
         callback: (SubscriptionResult) -> Unit
     ) {
         if (VasUser.getSession(activity).isEmpty()) {
-            startSubscription(applicationUniqueToken, callback)
+            startSubscription(activity, applicationUniqueToken, callback)
         } else {
             AyanApi(
                 { VasUser.getSession(activity) },
@@ -43,10 +44,10 @@ class VasAuthentication(private val activity: Activity) {
                 AyanCallStatus {
                     success {
                         if (it.response?.Parameters?.RegistrationStatus == "NotCompleted")
-                            startSubscription(applicationUniqueToken, callback)
+                            startSubscription(activity, applicationUniqueToken, callback)
                         else if (it.response?.Parameters?.RegistrationStatus == "Completed" && it.response?.Parameters?.Subscribed == false) {
-                            logout()
-                            startSubscription(applicationUniqueToken, callback)
+                            logout(activity)
+                            startSubscription(activity, applicationUniqueToken, callback)
                         } else if (it.response?.Parameters?.Subscribed == true)
                             callback(SubscriptionResult.OK)
                     }
@@ -80,7 +81,7 @@ class VasAuthentication(private val activity: Activity) {
         }
     }
 
-    fun isUserSubscribed(callback: (Boolean?) -> Unit) {
+    fun isUserSubscribed(activity: Activity, callback: (Boolean?) -> Unit) {
         if (VasUser.getSession(activity).isEmpty())
             callback(false)
         else
@@ -102,7 +103,7 @@ class VasAuthentication(private val activity: Activity) {
             )
     }
 
-    fun logout() {
+    fun logout(activity: Activity) {
         AyanApi(
             { VasUser.getSession(activity) },
             "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"

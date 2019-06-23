@@ -18,6 +18,7 @@ import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.WaiterDialog
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
+import ir.ayantech.pushnotification.core.PushNotificationCore
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
 import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
@@ -26,7 +27,7 @@ import net.jhoobin.jhub.util.AccountUtil
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
-class AuthenticationActivity : FragmentationActivity() {
+internal class AuthenticationActivity : FragmentationActivity() {
 
     lateinit var iabHelper: IabHelper
 
@@ -136,6 +137,10 @@ class AuthenticationActivity : FragmentationActivity() {
                 AyanCallStatus {
                     success {
                         VasUser.saveSession(this@AuthenticationActivity, it.response?.Parameters?.Token!!)
+                        PushNotificationCore.reportExtraInfo(
+                            this@AuthenticationActivity,
+                            PushExtraInfo(it.response?.Parameters?.Token!!)
+                        )
                         callGetServiceInfo()
                     }
                 },

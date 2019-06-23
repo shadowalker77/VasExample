@@ -1,5 +1,5 @@
 package ir.ayantech.ayanvas.model
 
-data class ConfirmMciSubscriptionInput(
+internal data class ConfirmMciSubscriptionInput(
     val ActivationCode: String
 )

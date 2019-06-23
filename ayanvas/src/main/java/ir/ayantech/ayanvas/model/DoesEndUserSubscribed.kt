@@ -1,5 +1,5 @@
 package ir.ayantech.ayanvas.model
 
-data class DoesEndUserSubscribedOutput(
+internal data class DoesEndUserSubscribedOutput(
     val Subscribed: Boolean
 )

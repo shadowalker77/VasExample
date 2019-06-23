@@ -1,6 +1,6 @@
 package ir.ayantech.ayanvas.model
 
-data class ReportMtnSubscriptionInput(
+internal data class ReportMtnSubscriptionInput(
     val DeveloperPayload: String,
     val IsAutoRenewing: Boolean,
     val ItemType: String,

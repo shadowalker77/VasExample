@@ -7,11 +7,11 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.hamrahnegar.classictable"
+        applicationId "ir.ayantech.vaseffectino"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "3.0.0"
+        versionName "1.2.0"
     }
     buildTypes {
         release {
@@ -26,8 +26,12 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
 
     implementation project(':ayanvas')
     implementation project(':inAppPurchase')
     implementation project(':inAppSDK')
 }
+
+apply plugin: 'com.google.gms.google-services'

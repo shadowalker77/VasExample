@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "0.1.7"
+        versionName "0.2.0"
     }
 
     buildTypes {
@@ -27,6 +27,11 @@ dependencies {
     compileOnly 'com.google.code.gson:gson:2.8.2'
     compileOnly 'com.squareup.retrofit2:converter-gson:2.3.0'
     compileOnly 'com.squareup.okhttp3:okhttp:3.12.0'
+
+    compileOnly 'com.google.firebase:firebase-messaging:17.3.4'
+    compileOnly 'com.google.firebase:firebase-core:16.0.3'
+
+    implementation 'com.github.shadowalker77:samplepush:0.1.0'
 
     implementation 'com.github.shadowalker77:networking:0.2.0'
 

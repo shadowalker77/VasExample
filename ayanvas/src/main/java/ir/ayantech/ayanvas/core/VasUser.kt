@@ -8,10 +8,10 @@ class VasUser {
     companion object {
         const val VAS_USER_SESSION = "vasUserSession"
         const val VAS_USER_MOBILE = "vasUserMobile"
-//        const val VAS_USER_SUBSCRIBED = "vasUserSubscribed"
+        //        const val VAS_USER_SUBSCRIBED = "vasUserSubscribed"
         const val VAS_USER_APPLICATION_UNIQUE_ID = "vasUserApplicationUniqueId"
 
-        fun saveSession(context: Context, session: String) {
+        internal fun saveSession(context: Context, session: String) {
             PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_SESSION, session)
         }
 
@@ -20,21 +20,25 @@ class VasUser {
         }
 
         private fun saveApplicationUniqueId(context: Context, applicationUniqueId: String) {
-            PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_APPLICATION_UNIQUE_ID, applicationUniqueId)
+            PreferencesManager.getInstance(context)
+                .saveToSharedPreferences(VAS_USER_APPLICATION_UNIQUE_ID, applicationUniqueId)
         }
 
-        fun getApplicationUniqueId(context: Context): String {
-            return if (PreferencesManager.getInstance(context).readStringFromSharedPreferences(VAS_USER_APPLICATION_UNIQUE_ID).isNotEmpty())
+        internal fun getApplicationUniqueId(context: Context): String {
+            return if (PreferencesManager.getInstance(context).readStringFromSharedPreferences(
+                    VAS_USER_APPLICATION_UNIQUE_ID
+                ).isNotEmpty()
+            )
                 PreferencesManager.getInstance(context).readStringFromSharedPreferences(VAS_USER_APPLICATION_UNIQUE_ID)
             else
                 createApplicationUniqueId(context).also { saveApplicationUniqueId(context, it) }
         }
 
-        fun saveMobile(context: Context, mobile: String) {
+        internal fun saveMobile(context: Context, mobile: String) {
             PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_MOBILE, mobile)
         }
 
-        fun removeSession(context: Context) {
+        internal fun removeSession(context: Context) {
             PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_SESSION, "")
         }
 
@@ -42,7 +46,7 @@ class VasUser {
             return PreferencesManager.getInstance(context).readStringFromSharedPreferences(VAS_USER_MOBILE)
         }
 
-        fun removeUserMobileNumber(context: Context) {
+        internal fun removeUserMobileNumber(context: Context) {
             PreferencesManager.getInstance(context).saveToSharedPreferences(VAS_USER_MOBILE, "")
         }
 

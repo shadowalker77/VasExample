@@ -1,5 +1,5 @@
 package ir.ayantech.ayanvas.model
 
-data class RequestMciSubscriptionInput(
+internal data class RequestMciSubscriptionInput(
     val MobileNumber: String
 )

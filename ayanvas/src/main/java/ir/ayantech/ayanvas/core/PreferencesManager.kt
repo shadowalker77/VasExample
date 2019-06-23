@@ -3,7 +3,7 @@ package ir.ayantech.ayanvas.core
 import android.content.Context
 import android.content.SharedPreferences
 
-class PreferencesManager private constructor(context: Context) {
+internal class PreferencesManager private constructor(context: Context) {
 
     private var sharedPreferences: SharedPreferences? = null
 

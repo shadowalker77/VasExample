@@ -1,6 +1,6 @@
 package ir.ayantech.ayanvas.model
 
-class EndPoint {
+internal class EndPoint {
     companion object {
         const val ConfirmMciSubscription = "ConfirmMciSubscription"
         const val DoesEndUserSubscribed = "DoesEndUserSubscribed"

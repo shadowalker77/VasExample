@@ -2,7 +2,7 @@ package ir.ayantech.ayanvas.model
 
 import android.os.Build
 
-data class ReportNewDeviceInput(
+internal data class ReportNewDeviceInput(
     val ApplicationName: String,
     val ApplicationType: String,
     val UniqueID: String,
@@ -12,7 +12,7 @@ data class ReportNewDeviceInput(
     val OperatorName: String
 )
 
-data class ReportNewDeviceExtraInfo(
+internal data class ReportNewDeviceExtraInfo(
     val PackageName: String,
     val InstalledApps: String,
     val VersionCode: String,
@@ -22,6 +22,6 @@ data class ReportNewDeviceExtraInfo(
     val Device: String = Build.DEVICE
 )
 
-data class ReportNewDeviceOutput(
+internal data class ReportNewDeviceOutput(
     val Token: String
 )

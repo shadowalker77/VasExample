@@ -8,7 +8,7 @@ import ir.ayantech.ayanvas.R
 import ir.ayantech.ayanvas.helper.setHtmlText
 import kotlinx.android.synthetic.main.ayan_vas_dialog_yes_no.*
 
-class YesNoDialog(context: Context, title: String?, message: String) : Dialog(context) {
+internal class AyanYesNoDialog(context: Context, title: String?, message: String) : Dialog(context) {
 
     init {
         initialize(context, title, message)

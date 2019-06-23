@@ -15,7 +15,7 @@ import smartdevelop.ir.eram.showcaseviewlib.GuideView
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
 import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
-class EnterActivationFragment : FragmentationFragment() {
+internal class EnterActivationFragment : FragmentationFragment() {
 
     lateinit var mobileNumber: String
     private var guideView: GuideView? = null

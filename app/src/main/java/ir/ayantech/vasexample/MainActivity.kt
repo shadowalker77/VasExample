@@ -3,8 +3,8 @@ package ir.ayantech.vasexample
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import ir.ayantech.ayanvas.core.AyanCore
 import ir.ayantech.ayanvas.core.SubscriptionResult
-import ir.ayantech.ayanvas.core.VasAuthentication
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,9 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         startBtn.setOnClickListener {
-            VasAuthentication(this).start(
-                uniqueTokenEt.text.toString()
-            ) {
+            AyanCore.startVasSubscription(this) {
                 when (it) {
                     SubscriptionResult.OK -> Log.d("Subscription", "OK")
                     SubscriptionResult.CANCELED -> Log.d("Subscription", "CANCELED")
@@ -26,12 +24,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         logoutBtn.setOnClickListener {
-            VasAuthentication(this).logout()
+            AyanCore.logout(this)
         }
     }
 
     fun checkUserSubscription() {
-        VasAuthentication(this).isUserSubscribed {
+        AyanCore.isUserSubscribed(this) {
             when (it) {
                 null -> Log.d("SubscriptionStatus", "checking failed for some reasons")
                 true -> Log.d("SubscriptionStatus", "user is subscribed")

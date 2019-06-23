@@ -46,12 +46,14 @@ abstract class FragmentationFragment : SwipeBackFragment() {
 
     fun getAyanApi() = (activity as AuthenticationActivity).ayanApi
 
-    fun getResponseOfGetServiceInfo() = (activity as AuthenticationActivity).getServiceInfo?.response?.Parameters
+    internal fun getResponseOfGetServiceInfo() =
+        (activity as AuthenticationActivity).getServiceInfo?.response?.Parameters
 
     override fun onSupportVisible() {
         super.onSupportVisible()
         try {
             Sneaker.hide()
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
     }
 }

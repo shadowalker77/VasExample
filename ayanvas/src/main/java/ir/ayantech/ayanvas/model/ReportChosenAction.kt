@@ -1,5 +1,5 @@
 package ir.ayantech.ayanvas.model
 
-data class ReportChosenActionInput(
+internal data class ReportChosenActionInput(
     val Action: String
 )

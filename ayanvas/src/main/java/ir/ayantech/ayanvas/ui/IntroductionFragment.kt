@@ -15,7 +15,7 @@ import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_introduction.*
 import kotlinx.android.synthetic.main.ayan_vas_slide.view.*
 
-class IntroductionFragment : FragmentationFragment() {
+internal class IntroductionFragment : FragmentationFragment() {
 
     lateinit var sliders: ArrayList<Slider>
 

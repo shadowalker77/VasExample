@@ -3,7 +3,7 @@ package ir.ayantech.ayanvas.ui
 import android.view.View
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayanvas.R
-import ir.ayantech.ayanvas.dialog.YesNoDialog
+import ir.ayantech.ayanvas.dialog.AyanYesNoDialog
 import ir.ayantech.ayanvas.helper.loadBase64
 import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.helper.setOnTextChange
@@ -17,7 +17,7 @@ import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
 import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 
-class GetMobileFragment : FragmentationFragment() {
+internal class GetMobileFragment : FragmentationFragment() {
 
     private var guideView: GuideView? = null
 
@@ -36,7 +36,7 @@ class GetMobileFragment : FragmentationFragment() {
             nextTv.setHtmlText(FirstPageButton)
             if (PriceText.isNullOrEmpty()) priceTv.visibility = View.GONE else priceTv.text = PriceText
             showAgreementTv.setOnClickListener {
-                val yesNoDialog = YesNoDialog(activity!!, AgreementTitle, AgreementContent)
+                val yesNoDialog = AyanYesNoDialog(activity!!, AgreementTitle, AgreementContent)
                 yesNoDialog.removeNegativeButton()
                 yesNoDialog.setPositiveText(AgreementButton)
                 yesNoDialog.setPositiveAction(View.OnClickListener { yesNoDialog.dismiss() })

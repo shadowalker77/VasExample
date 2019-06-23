@@ -1,6 +1,6 @@
 package ir.ayantech.ayanvas.model
 
-data class GetServiceInfoOutput(
+internal data class GetServiceInfoOutput(
     val Action: String,
     val ActivationKey: String,
     val AgreementContent: String,
@@ -27,14 +27,14 @@ data class GetServiceInfoOutput(
     val Sliders: ArrayList<Slider>
 )
 
-data class Slider(
+internal data class Slider(
     val Description: String,
     val Image: String,
     val ImageBase64: String,
     val Title: String?
 )
 
-class GetServiceInfoAction {
+internal class GetServiceInfoAction {
     companion object {
         const val MCI_REGISTER = "MciRegister"
         const val MTN_REGISTER = "MtnRegister"

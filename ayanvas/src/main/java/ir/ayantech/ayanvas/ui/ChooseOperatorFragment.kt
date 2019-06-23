@@ -11,7 +11,7 @@ import ir.ayantech.ayanvas.model.ReportChosenActionInput
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_choose_operator.*
 
-class ChooseOperatorFragment : FragmentationFragment() {
+internal class ChooseOperatorFragment : FragmentationFragment() {
     override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_choose_operator
 
     override fun onCreate() {
