@@ -90,9 +90,7 @@ class AyanVersionControlDialog(
                                 try {
                                     installApp(context, filePath)
                                     dismiss()
-                                    callback(
-                                        checkVersion.UpdateStatus != VersionControlUpdateStatus.MANDATORY
-                                    )
+                                    callback(false)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
                                 }

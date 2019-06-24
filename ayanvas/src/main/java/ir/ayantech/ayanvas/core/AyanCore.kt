@@ -37,5 +37,9 @@ class AyanCore {
         fun logout(activity: Activity) {
             getInstance().ayanCheckStatusDialog.logout(activity)
         }
+
+        fun shareApp(context: Context) {
+            VersionControl.shareApp(context)
+        }
     }
 }

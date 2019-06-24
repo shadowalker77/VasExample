@@ -67,45 +67,41 @@ internal class VersionControl(val activity: Activity, ayanCommonCallStatus: Ayan
         )
     }
 
-    fun shareApp(context: Context) {
-        if (getLastVersion != null) {
-            try {
-                share(context, getLastVersion?.response?.Parameters?.TextToShare!!)
-            } catch (e: Exception) {
-            }
+    companion object {
+        fun shareApp(context: Context) {
+            AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
+                .ayanCall<GetLastVersionOutput>(
+                    AyanCallStatus {
+                        success {
+                            share(context, it.response?.Parameters?.TextToShare!!)
+                        }
+                    },
+                    "GetLastVersion",
+                    GetLastVersionInput(
+                        InformationHelper.getApplicationName(context),
+                        InformationHelper.getApplicationType(context),
+                        InformationHelper.getApplicationCategory(context),
+                        InformationHelper.getApplicationVersion(context),
+                        AppExtraInfo(VasUser.getSession(context))
+                    )
+                    , commonCallStatus = AyanCommonCallStatus {
+                        failure {
+                            Toast.makeText(
+                                context,
+                                "لطفا اتصال اینترنت خود را بررسی کرده و دوباره تلاش نمایید.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
 
-        } else {
-            getLastVersion = ayanApi.ayanCall(
-                AyanCallStatus {
-                    success {
-                        share(context, it.response?.Parameters?.TextToShare!!)
-                    }
-                },
-                "GetLastVersion",
-                GetLastVersionInput(
-                    InformationHelper.getApplicationName(context),
-                    InformationHelper.getApplicationType(context),
-                    InformationHelper.getApplicationCategory(context),
-                    InformationHelper.getApplicationVersion(context),
-                    AppExtraInfo(VasUser.getSession(context))
-                )
-                , commonCallStatus = AyanCommonCallStatus {
-                    failure {
-                        Toast.makeText(
-                            context,
-                            "لطفا اتصال اینترنت خود را بررسی کرده و دوباره تلاش نمایید.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                })
         }
-    }
 
-    private fun share(context: Context, shareBody: String) {
-        ShareCompat.IntentBuilder.from(context as Activity)
-            .setText(shareBody)
-            .setType("text/plain")
-            .setChooserTitle("به اشتراک گذاری از طریق:")
-            .startChooser()
+        private fun share(context: Context, shareBody: String) {
+            ShareCompat.IntentBuilder.from(context as Activity)
+                .setText(shareBody)
+                .setType("text/plain")
+                .setChooserTitle("به اشتراک گذاری از طریق:")
+                .startChooser()
+        }
     }
 }
