@@ -2,12 +2,13 @@ package ir.ayantech.ayanvas.core
 
 import android.app.Activity
 import android.content.Context
+import ir.ayantech.ayanvas.dialog.AyanCheckStatusDialog
 import ir.ayantech.pushnotification.core.PushNotificationCore
 
 class AyanCore {
 
     lateinit var applicationUniqueToken: String
-    private lateinit var vasAuthentication: VasAuthentication
+    private lateinit var ayanCheckStatusDialog: AyanCheckStatusDialog
 
     companion object {
 
@@ -17,7 +18,6 @@ class AyanCore {
 
         fun initialize(context: Context, applicationUniqueToken: String) {
             getInstance().applicationUniqueToken = applicationUniqueToken
-            getInstance().vasAuthentication = VasAuthentication()
             PushNotificationCore.start(context)
         }
 
@@ -25,15 +25,17 @@ class AyanCore {
             activity: Activity,
             callback: (SubscriptionResult) -> Unit
         ) {
-            getInstance().vasAuthentication.start(activity, getInstance().applicationUniqueToken, callback)
+            getInstance().ayanCheckStatusDialog =
+                AyanCheckStatusDialog(activity, getInstance().applicationUniqueToken, callback)
+            getInstance().ayanCheckStatusDialog.show()
         }
 
         fun isUserSubscribed(activity: Activity, callback: (Boolean?) -> Unit) {
-            getInstance().vasAuthentication.isUserSubscribed(activity, callback)
+            getInstance().ayanCheckStatusDialog.isUserSubscribed(activity, callback)
         }
 
         fun logout(activity: Activity) {
-            getInstance().vasAuthentication.logout(activity)
+            getInstance().ayanCheckStatusDialog.logout(activity)
         }
     }
 }

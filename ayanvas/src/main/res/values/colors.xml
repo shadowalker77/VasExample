@@ -3,4 +3,12 @@
     <color name="colorAccent">#2064B4</color>
     <color name="ayanAccent">@color/colorAccent</color>
     <color name="ayanSliderBack">@color/ayanAccent</color>
+
+    <color name="vc_accent">@color/colorAccent</color>
+    <color name="vc_background">@color/vc_white</color>
+    <color name="vc_message">@color/vc_black</color>
+    <color name="vc_change_log">@color/vc_black</color>
+
+    <color name="vc_black">#000000</color>
+    <color name="vc_white">#ffffff</color>
 </resources>

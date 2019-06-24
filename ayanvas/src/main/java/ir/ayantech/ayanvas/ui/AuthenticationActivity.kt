@@ -4,20 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.telephony.TelephonyManager
 import android.view.ViewGroup
 import com.android.billingclient.util.IabHelper
 import com.android.billingclient.util.MarketIntentFactorySDK
-import com.google.gson.Gson
 import com.irozon.sneaker.Sneaker
 import ir.ayantech.ayannetworking.api.*
 import ir.ayantech.ayannetworking.ayanModel.Failure
 import ir.ayantech.ayanvas.R
 import ir.ayantech.ayanvas.core.SubscriptionResult
-import ir.ayantech.ayanvas.core.VasAuthentication
 import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.WaiterDialog
+import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getApplicationName
+import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getApplicationType
+import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getApplicationVersion
+import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getInstalledApps
+import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getOperatorName
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
 import ir.ayantech.pushnotification.core.PushNotificationCore
@@ -43,23 +44,6 @@ internal class AuthenticationActivity : FragmentationActivity() {
             val intent = Intent(context, AuthenticationActivity::class.java)
             intent.putExtra(VAS_APPLICATION_UNIQUE_TOKEN, vasApplicationUniqueToken)
             return intent
-        }
-
-        fun getApplicationName(context: Context) = context.resources.getString(R.string.applicationName)
-
-        fun getApplicationType(context: Context) = context.resources.getString(R.string.applicationType)
-
-        fun getApplicationVersion(context: Context) =
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
-
-        fun getOperatorName(context: Context) =
-            (context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).networkOperatorName
-
-        fun getInstalledApps(context: Context): String {
-            val mainIntent = Intent(Intent.ACTION_MAIN, null)
-            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pkgAppsList = context.packageManager.queryIntentActivities(mainIntent, 0)
-            return Gson().toJson(pkgAppsList.map { it.activityInfo.processName })
         }
     }
 
@@ -141,7 +125,7 @@ internal class AuthenticationActivity : FragmentationActivity() {
                         VasUser.saveSession(this@AuthenticationActivity, it.response?.Parameters?.Token!!)
                         PushNotificationCore.reportExtraInfo(
                             this@AuthenticationActivity,
-                            PushExtraInfo(it.response?.Parameters?.Token!!)
+                            AppExtraInfo(it.response?.Parameters?.Token!!)
                         )
                         callGetServiceInfo()
                     }

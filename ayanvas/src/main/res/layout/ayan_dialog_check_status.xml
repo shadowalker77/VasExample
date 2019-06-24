@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ayanRclPadding">
+
+    <ir.alirezabdn.wp7progress.WP10ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/ayanAccent"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:text="لطفا صبر کنید"
+            android:layout_alignParentRight="true"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/progressBar"
+            android:layout_alignBottom="@+id/progressBar"
+            android:fontFamily="@font/iransans"
+            fontFamily="@font/iransans"
+            android:gravity="center"/>
+
+    <LinearLayout
+            android:id="@+id/retryRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="#ffffff">
+
+        <TextView
+                android:id="@+id/errorTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:fontFamily="@font/iransans"
+                fontFamily="@font/iransans"
+                android:text="ارتباط با سرور برقرار نشد."/>
+
+        <TextView
+                android:id="@+id/retryTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ayanAccent"
+                android:layout_marginTop="@dimen/ayanMainPadding"
+                android:layout_alignParentBottom="true"
+                android:fontFamily="@font/iransans"
+                fontFamily="@font/iransans"
+                android:textSize="20sp"
+                android:text="تلاش مجدد"/>
+    </LinearLayout>
+</RelativeLayout>
