@@ -30,6 +30,7 @@ internal class RequestHandler(
             requestFragment.requestHandler = this
             requestFragment
         } else {
+            requestFragment.requestHandler = this
             requestFragment
         }
     }

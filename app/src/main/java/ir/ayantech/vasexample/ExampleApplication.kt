@@ -6,6 +6,6 @@ import ir.ayantech.ayanvas.core.AyanCore
 class ExampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        AyanCore.initialize(this, "bulk")
+        AyanCore.initialize(this, "socialmedia1")
     }
 }
