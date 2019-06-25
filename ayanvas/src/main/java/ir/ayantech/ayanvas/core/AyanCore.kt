@@ -3,6 +3,7 @@ package ir.ayantech.ayanvas.core
 import android.app.Activity
 import android.content.Context
 import ir.ayantech.ayanvas.dialog.AyanCheckStatusDialog
+import ir.ayantech.ayanvas.model.AppExtraInfo
 import ir.ayantech.pushnotification.core.PushNotificationCore
 
 class AyanCore {
@@ -19,6 +20,7 @@ class AyanCore {
         fun initialize(context: Context, applicationUniqueToken: String) {
             getInstance().applicationUniqueToken = applicationUniqueToken
             PushNotificationCore.start(context)
+            PushNotificationCore.reportExtraInfo(context, AppExtraInfo(VasUser.getSession(context)))
         }
 
         fun startVasSubscription(
