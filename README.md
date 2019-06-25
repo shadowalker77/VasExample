@@ -159,7 +159,7 @@ If progurad is enabled for your project, you need to add Retrofit, Gson and OkHt
 -keep public class ir.ayantech.ayanvas.** { *; }
 -keep public class ir.ayantech.pushnotification.** { *; }
 ```
-Also if your app doesn't supports Irancell authentication, you need to add following lines too:
+Also if your app **doesn't** supports Irancell authentication, you need to add following lines too:
 ```java
 -dontwarn com.android.billingclient.**
 -dontwarn net.jhoobin.jhub.**
