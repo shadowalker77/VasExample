@@ -1,5 +1,5 @@
-# AyanVas Authentication
-This library aims to do all the logic of authentication in VAS related android apps belongs to AyanTech.
+# AyanCore
+This library aims to do all the logic of authentication, push notification and version control in VAS related android apps belongs to AyanTech.
 
 # How to add this to your project
 This project is made by kotlin. So if you build your app completely in JAVA and you didn't config kotlin for your project, you may need to add kotlin to the project. Follow [this](https://developer.android.com/studio/projects/add-kotlin) link for instructions.
