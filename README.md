@@ -32,85 +32,99 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.1.6'
+implementation 'com.github.shadowalker77:vasexample:0.3.9'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="applicationName">applicationName</string>
+    <string name="applicationCategory">android</string>
     <string name="applicationType">android</string>
 </resources>
 ```
-**Attention:** You don't need to set application type in most of projects. But configuring application name will be needed in all projects.
+**Attention:** You don't need to set application type in most of projects. But configuring application name and category will be needed in all projects.
 # Usage
-On each start of application, depends on which language you are coding (JAVA or kotlin) use one of this approaches. After get the result in the callback method, you should proceed with proper logic.
+You should communicate with this SDK using AyanCore class. In java you should use AyanCore.Companion.* and in kotlin you should use AyanCore.*. Here is an example:
+You should initialize the SDK in your application class. So, here is how you should do it:
 * JAVA:
 ```java
-new VasAuthentication(context).start("APP_UNIQUE_TOKEN",
- new Function1<SubscriptionResult, Unit>() {
-            @Override
-    public Unit invoke(SubscriptionResult subscriptionResult) {
-				if (SubscriptionResult.OK == subscriptionResult) {
-				    Log.d("Subscription", "OK");
-				} else if (SubscriptionResult.CANCELED == subscriptionResult) {
-				    Log.d("Subscription", "CANCELED");
-				} else if (SubscriptionResult.NO_INTERNET_CONNECTION == subscriptionResult) {
-				    Log.d("Subscription", "NO_INTERNET_CONNECTION");
-				} else if (SubscriptionResult.TIMEOUT == subscriptionResult) {
-				    Log.d("Subscription", "TIMEOUT");
-				} else if (SubscriptionResult.UNKNOWN == subscriptionResult) {
-				    Log.d("Subscription", "UNKNOWN");
-				}
-				return null;
-            }
-        });
+AyanCore.Companion.initialize(this, "APP_UNIQUE_TOKEN")
 ```
 In the callback function, subscriptionResult variable determines the result of user subscription.
 * kotlin:
 ```kotlin
-VasAuthentication(context).start("APP_UNIQUE_TOKEN") {
-	when (it) {
-	    SubscriptionResult.OK ->  Log.d("Subscription", "OK")
-	    SubscriptionResult.CANCELED ->  Log.d("Subscription", "CANCELED")
-	    SubscriptionResult.NO_INTERNET_CONNECTION ->  Log.d("Subscription", "NO_INTERNET_CONNECTION")
-	    SubscriptionResult.TIMEOUT ->  Log.d("Subscription", "TIMEOUT")
-	    SubscriptionResult.UNKNOWN ->  Log.d("Subscription", "UNKNOWN")
-	}
+AyanCore.initialize(this, "APP_UNIQUE_TOKEN")
+```
+On each start of application, in your main activity, depends on which language you are coding (JAVA or kotlin) use one of this approaches. After get the result in the callback method, you should proceed with proper logic.
+* JAVA:
+```java
+AyanCore.Companion.startVasSubscription(activity,
+    new Function1<SubscriptionResult, Unit>() {
+        @Override
+        public Unit invoke(SubscriptionResult subscriptionResult) {
+            if (SubscriptionResult.OK == subscriptionResult) {
+                Log.d("Subscription", "OK");
+			} else if (SubscriptionResult.CANCELED == subscriptionResult) {
+                Log.d("Subscription", "CANCELED");
+			} else if (SubscriptionResult.NO_INTERNET_CONNECTION == subscriptionResult) {
+                Log.d("Subscription", "NO_INTERNET_CONNECTION");
+			} else if (SubscriptionResult.TIMEOUT == subscriptionResult) {
+                Log.d("Subscription", "TIMEOUT");
+			} else if (SubscriptionResult.UNKNOWN == subscriptionResult) {
+                Log.d("Subscription", "UNKNOWN");
+			}
+            return null;
+	    }
+    });
+```
+In the callback function, subscriptionResult variable determines the result of user subscription.
+* kotlin:
+```kotlin
+AyanCore.startVasSubscription(activity) {
+  when (it) {
+        SubscriptionResult.OK -> Log.d("Subscription", "OK")
+        SubscriptionResult.CANCELED -> Log.d("Subscription", "CANCELED")
+        SubscriptionResult.NO_INTERNET_CONNECTION -> Log.d("Subscription", "NO_INTERNET_CONNECTION")
+        SubscriptionResult.TIMEOUT -> Log.d("Subscription", "TIMEOUT")
+        SubscriptionResult.UNKNOWN -> Log.d("Subscription", "UNKNOWN")
+    }
 }
 ```
-**Attention:** context in constructor of VasAuthentications class should be activity context.
+**Attention:** In this method you need to pass reference to your activity.
 # Access user token
 For accessing user token, you should call:
 * JAVA:
 ```java
-VasUser.Companion.getSession(context);
+AyanCore.Companion.getUserToken(context);
 ```
 * kotlin:
 ```java
-VasUser.getSession(context)
+AyanCore.getUserToken(context)
 ```
 # Logout user
 For log user out, call:
 * JAVA:
 ```java
-new VasAuthentication(context).logout();
+AyanCore.Companion.logout(context);
 ```
 In the callback function, subscriptionResult variable determines the result of user subscription.
 * kotlin:
 ```kotlin
-VasAuthentication(context).logout()
+AyanCore.logout(context);
 ```
 # Check for subscription status of user
 For checking user subscription status, use below method:
 * JAVA:
 ```java
-new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
+AyanCore.Companion.isUserSubscribed(this, new Function1<Boolean, Unit>() {
     @Override
-    public Unit invoke(Boolean aBoolean) {
-        Log.d("SubscriptionStatus", aBoolean.toString())
-        return null;
-    }
+	public Unit invoke(Boolean aBoolean) {
+        if (aBoolean == null) Log.d("SubscriptionStatus", "checking failed for some reasons");
+		else if (aBoolean) Log.d("SubscriptionStatus", "user is subscribed");
+		else Log.d("SubscriptionStatus", "user is not subscribed");
+		return null;
+	}
 });
 ```
 **Attention:** aBoolean determines the status of user subscription.
@@ -118,17 +132,32 @@ new VasAuthentication(this).isUserSubscribed(new Function1<Boolean, Unit>() {
 
 * kotlin:
 ```kotlin
-VasAuthentication(this).isUserSubscribed {
-    Log.d("SubscriptionStatus", it.toString())
+AyanCore.isUserSubscribed(this) {
+  when (it) {
+        null -> Log.d("SubscriptionStatus", "checking failed for some reasons")
+        true -> Log.d("SubscriptionStatus", "user is subscribed")
+        false -> Log.d("SubscriptionStatus", "user is not subscribed")
+    }
 }
 ```
 **Attention:** it variable is a Boolead which determines the status of user subscription.
 **Important:** it variable may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
+# Share app
+In order to properly share a valid link of app with proper descriptions, just call this method:
+* JAVA:
+```java
+AyanCore.Companion.shareApp(context)
+```
+* kotlin:
+```kotlin
+AyanCore.shareApp(context)
+```
 # Progurad
 If progurad is enabled for your project, you need to add Retrofit, Gson and OkHttp proguard rules depending of which version you are using. Also, you need to add this line to your proguard file:
 ```java
 -keep public class ir.ayantech.ayannetworking.** { *; }
 -keep public class ir.ayantech.ayanvas.** { *; }
+-keep public class ir.ayantech.pushnotification.** { *; }
 ```
 Also if your app doesn't supports Irancell authentication, you need to add following lines too:
 ```java
