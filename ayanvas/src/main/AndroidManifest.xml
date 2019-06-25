@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
           package="ir.ayantech.ayanvas">
 
+    <uses-permission
+            android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+            tools:node="remove"/>
+    <uses-permission
+            android:name="android.permission.READ_EXTERNAL_STORAGE"
+            tools:node="remove"/>
+
     <application android:allowBackup="false"
                  tools:replace="android:allowBackup">
         <activity android:name=".ui.AuthenticationActivity"
@@ -15,7 +22,7 @@
                 android:grantUriPermissions="true">
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/provider_paths" />
+                    android:resource="@xml/provider_paths"/>
         </provider>
     </application>
 </manifest>
