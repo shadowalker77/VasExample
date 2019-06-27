@@ -43,6 +43,10 @@ internal class EnterActivationFragment : FragmentationFragment() {
                     ConfirmMciSubscriptionInput(activationCodeEt.text.toString())
                 )
             }
+            userMobileTv.text = ActivationCodeInputHint?.replace(
+                "شماره خود",
+                VasUser.getMobile(activity!!)
+            )
         }
     }
 

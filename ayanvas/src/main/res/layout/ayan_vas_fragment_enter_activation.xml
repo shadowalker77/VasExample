@@ -39,7 +39,7 @@
                     <android.support.v7.widget.AppCompatImageView
                             android:id="@+id/backIv"
                             android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_height="match_parent"
                             app:srcCompat="@drawable/ic_arrow_back"
                             android:tint="#000"/>
 
@@ -57,10 +57,18 @@
                 </LinearLayout>
 
                 <TextView
-                        android:id="@+id/descriptionTv"
+                        android:id="@+id/userMobileTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ayanIconIvGap"
+                        android:gravity="center"
+                        android:textColor="#000"/>
+
+                <TextView
+                        android:id="@+id/descriptionTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ayanRclPadding"
                         android:gravity="center"
                         android:text="مرحله آخر: کد پیامک دریافت شده را وارد کنید."
                         android:textColor="#000"/>
