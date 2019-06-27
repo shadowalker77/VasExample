@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.ayan_dialog_check_status.*
 
 class AyanCheckStatusDialog(
     val activity: Activity,
-    val applicationUniqueToken: String,
+    private val applicationUniqueToken: String,
     val callback: (SubscriptionResult) -> Unit
 ) : Dialog(activity) {
 
@@ -49,7 +49,7 @@ class AyanCheckStatusDialog(
         }
     }
 
-    private val versionControl = VersionControl(activity, ayanCommonCallingStatus)
+    private val versionControl = VersionControl(activity, applicationUniqueToken, ayanCommonCallingStatus)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

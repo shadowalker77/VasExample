@@ -43,7 +43,7 @@ class AyanCore {
         fun getUserToken(context: Context): String = VasUser.getSession(context)
 
         fun shareApp(context: Context) {
-            VersionControl.shareApp(context)
+            VersionControl.shareApp(context, getInstance().applicationUniqueToken)
         }
     }
 }

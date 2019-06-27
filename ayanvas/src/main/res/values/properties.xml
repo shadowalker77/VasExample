@@ -2,5 +2,4 @@
 <resources>
     <string name="applicationName">applicationName</string>
     <string name="applicationType">android</string>
-    <string name="applicationCategory">socialMedia</string>
 </resources>

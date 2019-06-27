@@ -12,7 +12,11 @@ import ir.ayantech.ayanvas.dialog.AyanVersionControlDialog
 import ir.ayantech.ayanvas.helper.InformationHelper
 import ir.ayantech.ayanvas.model.*
 
-internal class VersionControl(val activity: Activity, ayanCommonCallStatus: AyanCommonCallStatus) {
+internal class VersionControl(
+    val activity: Activity,
+    val applicationUniqueToken: String,
+    ayanCommonCallStatus: AyanCommonCallStatus
+) {
 
     val ayanApi = AyanApi(
         defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/",
@@ -37,7 +41,7 @@ internal class VersionControl(val activity: Activity, ayanCommonCallStatus: Ayan
             CheckVersionInput(
                 InformationHelper.getApplicationName(activity),
                 InformationHelper.getApplicationType(activity),
-                InformationHelper.getApplicationCategory(activity),
+                InformationHelper.getApplicationCategory(applicationUniqueToken),
                 InformationHelper.getApplicationVersion(activity),
                 AppExtraInfo(VasUser.getSession(activity))
             )
@@ -60,15 +64,23 @@ internal class VersionControl(val activity: Activity, ayanCommonCallStatus: Ayan
             GetLastVersionInput(
                 InformationHelper.getApplicationName(activity),
                 InformationHelper.getApplicationType(activity),
-                InformationHelper.getApplicationCategory(activity),
+                InformationHelper.getApplicationCategory(applicationUniqueToken),
                 InformationHelper.getApplicationVersion(activity),
                 AppExtraInfo(VasUser.getSession(activity))
             )
         )
     }
 
+    private fun getApplicationCategory(): String {
+        return when (applicationUniqueToken.toLowerCase()) {
+            "playstore" -> "playstore"
+            "charkhoneh" -> "charkhoneh"
+            else -> "socialmedia"
+        }
+    }
+
     companion object {
-        fun shareApp(context: Context) {
+        fun shareApp(context: Context, applicationUniqueToken: String) {
             AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
                 .ayanCall<GetLastVersionOutput>(
                     AyanCallStatus {
@@ -80,7 +92,7 @@ internal class VersionControl(val activity: Activity, ayanCommonCallStatus: Ayan
                     GetLastVersionInput(
                         InformationHelper.getApplicationName(context),
                         InformationHelper.getApplicationType(context),
-                        InformationHelper.getApplicationCategory(context),
+                        InformationHelper.getApplicationCategory(applicationUniqueToken),
                         InformationHelper.getApplicationVersion(context),
                         AppExtraInfo(VasUser.getSession(context))
                     )

@@ -10,8 +10,6 @@ internal class InformationHelper {
 
         fun getApplicationType(context: Context) = context.resources.getString(R.string.applicationType)
 
-        fun getApplicationCategory(context: Context) = context.resources.getString(R.string.applicationCategory)
-
         fun getApplicationVersion(context: Context) =
             context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
@@ -26,5 +24,12 @@ internal class InformationHelper {
 //        }
 
         fun getInstalledApps(context: Context): String = ""
+
+        fun getApplicationCategory(applicationUniqueToken: String) = when (applicationUniqueToken.toLowerCase()) {
+            "playstore" -> "playstore"
+            "bulk" -> "bulk"
+            "charkhoneh" -> "charkhoneh"
+            else -> "socialmedia"
+        }
     }
 }
