@@ -32,22 +32,24 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 internal class AuthenticationActivity : FragmentationActivity() {
 
-    lateinit var iabHelper: IabHelper
+    private lateinit var iabHelper: IabHelper
+    private lateinit var waiterDialog: WaiterDialog
 
     companion object {
         private const val VAS_APPLICATION_UNIQUE_TOKEN = "vasApplicationUniqueTokenTag"
+        const val END_USER_STATUS = "vasEndUserStatusTag"
 
         fun getProperIntent(
             context: Context,
-            vasApplicationUniqueToken: String
+            vasApplicationUniqueToken: String,
+            endUserStatus: String
         ): Intent {
             val intent = Intent(context, AuthenticationActivity::class.java)
             intent.putExtra(VAS_APPLICATION_UNIQUE_TOKEN, vasApplicationUniqueToken)
+            intent.putExtra(END_USER_STATUS, endUserStatus)
             return intent
         }
     }
-
-    lateinit var waiterDialog: WaiterDialog
 
     var getServiceInfo: WrappedPackage<*, GetServiceInfoOutput>? = null
 
@@ -142,14 +144,19 @@ internal class AuthenticationActivity : FragmentationActivity() {
                 )
                 , hasIdentity = false
             )
+        else if (getEndUserStatus() == EndUserStatus.SecondPage)
+            loadRootFragment(
+                R.id.fragmentContainerFl,
+                GetMobileFragment().also { it.endUserStatus = getEndUserStatus() })
         else
             callGetServiceInfo()
     }
 
-    fun callGetServiceInfo() {
+    private fun callGetServiceInfo() {
         getServiceInfo = ayanApi.ayanCall(
             AyanCallStatus {
                 success {
+                    VasUser.saveGetServiceInfo(this@AuthenticationActivity, it.response?.Parameters!!)
                     when {
                         it.response?.Parameters?.Action == GetServiceInfoAction.NOTHING -> doCallBack(SubscriptionResult.OK)
                         it.response?.Parameters?.Action == GetServiceInfoAction.CHOOSE_OPERATOR -> loadRootFragment(
@@ -160,7 +167,9 @@ internal class AuthenticationActivity : FragmentationActivity() {
                             R.id.fragmentContainerFl,
                             IntroductionFragment().also { frag -> frag.sliders = it.response?.Parameters?.Sliders!! }
                         )
-                        else -> loadRootFragment(R.id.fragmentContainerFl, GetMobileFragment())
+                        else -> loadRootFragment(
+                            R.id.fragmentContainerFl,
+                            GetMobileFragment().also { it.endUserStatus = getEndUserStatus() })
                     }
                 }
             },
@@ -174,6 +183,8 @@ internal class AuthenticationActivity : FragmentationActivity() {
     }
 
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
+
+    private fun getEndUserStatus() = intent.getStringExtra(END_USER_STATUS)
 
     fun irancellSubscription() {
         CharkhoneSdkApp.initSdk(

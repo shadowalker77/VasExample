@@ -3,11 +3,13 @@ package ir.ayantech.ayanvas.ui
 import android.view.View
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayanvas.R
+import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.AyanYesNoDialog
 import ir.ayantech.ayanvas.helper.loadBase64
 import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.helper.setOnTextChange
 import ir.ayantech.ayanvas.model.EndPoint
+import ir.ayantech.ayanvas.model.EndUserStatus
 import ir.ayantech.ayanvas.model.GetServiceInfoAction
 import ir.ayantech.ayanvas.model.RequestMciSubscriptionInput
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
@@ -19,12 +21,15 @@ import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 internal class GetMobileFragment : FragmentationFragment() {
 
+    var endUserStatus: String? = null
+
     private var guideView: GuideView? = null
 
     override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_get_mobile
 
     override fun onCreate() {
         super.onCreate()
+        mobileNumberEt.setText(VasUser.getMobile(activity!!))
         mobileNumberEt.setOnTextChange { if (it.length == 11) hideSoftInput() }
         with(getResponseOfGetServiceInfo()!!) {
             if (!CanChangeOperator) chooseOperatorIv.visibility = View.GONE
@@ -48,6 +53,7 @@ internal class GetMobileFragment : FragmentationFragment() {
                         AyanCallStatus {
                             success {
                                 start(EnterActivationFragment().also {
+                                    VasUser.saveMobile(activity!!, mobileNumberEt.text.toString())
                                     it.mobileNumber = mobileNumberEt.text.toString()
                                 })
                             }
@@ -63,6 +69,7 @@ internal class GetMobileFragment : FragmentationFragment() {
                 start(ChooseOperatorFragment())
             }
         }
+        if (endUserStatus == EndUserStatus.SecondPage) start(EnterActivationFragment())
     }
 
     fun keyboardStatusHandler(it: Boolean) {

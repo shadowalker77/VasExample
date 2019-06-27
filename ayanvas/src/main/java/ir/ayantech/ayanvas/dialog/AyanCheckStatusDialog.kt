@@ -66,7 +66,7 @@ class AyanCheckStatusDialog(
         }
     }
 
-    fun showNoInternetLayout(failure: Failure) {
+    private fun showNoInternetLayout(failure: Failure) {
         retryRl.visibility = View.VISIBLE
         errorTv.text = failure.failureMessage
         retryTv.setOnClickListener {
@@ -75,9 +75,9 @@ class AyanCheckStatusDialog(
         }
     }
 
-    fun start() {
+    private fun start() {
         if (VasUser.getSession(activity).isEmpty()) {
-            startSubscription(activity, applicationUniqueToken, callback)
+            startSubscription(activity, applicationUniqueToken, EndUserStatus.FirstPage, callback)
         } else {
             AyanApi(
                 { VasUser.getSession(activity) },
@@ -85,13 +85,30 @@ class AyanCheckStatusDialog(
             ).ayanCall<ReportEndUserStatusOutput>(
                 AyanCallStatus {
                     success {
-                        if (it.response?.Parameters?.RegistrationStatus == "NotCompleted")
-                            startSubscription(activity, applicationUniqueToken, callback)
-                        else if (it.response?.Parameters?.RegistrationStatus == "Completed" && it.response?.Parameters?.Subscribed == false) {
-                            logout(activity)
-                            startSubscription(activity, applicationUniqueToken, callback)
-                        } else if (it.response?.Parameters?.Subscribed == true)
-                            callback(SubscriptionResult.OK)
+                        when (it.response?.Parameters?.PageState) {
+                            EndUserStatus.Subscribe -> callback(SubscriptionResult.OK)
+                            EndUserStatus.FirstPage -> startSubscription(
+                                activity,
+                                applicationUniqueToken,
+                                it.response?.Parameters?.PageState!!,
+                                callback
+                            )
+                            EndUserStatus.SecondPage -> startSubscription(
+                                activity,
+                                applicationUniqueToken,
+                                it.response?.Parameters?.PageState!!,
+                                callback
+                            )
+                            EndUserStatus.Unsubscribe -> {
+                                logout(activity)
+                                startSubscription(
+                                    activity,
+                                    applicationUniqueToken,
+                                    it.response?.Parameters?.PageState!!,
+                                    callback
+                                )
+                            }
+                        }
                     }
                 },
                 EndPoint.ReportEndUserStatus,
@@ -118,12 +135,14 @@ class AyanCheckStatusDialog(
     private fun startSubscription(
         activity: Activity,
         applicationUniqueToken: String,
+        endUserStatus: String,
         callback: (SubscriptionResult) -> Unit
     ) {
         requestHandler = RequestHandler(
             activity, AuthenticationActivity.getProperIntent(
                 activity,
-                applicationUniqueToken
+                applicationUniqueToken,
+                endUserStatus
             ),
             callback
         )

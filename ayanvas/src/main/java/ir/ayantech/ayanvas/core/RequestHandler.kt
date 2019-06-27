@@ -3,6 +3,8 @@ package ir.ayantech.ayanvas.core
 import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
+import ir.ayantech.ayanvas.model.EndUserStatus
+import ir.ayantech.ayanvas.ui.AuthenticationActivity
 
 internal class RequestHandler(
     val activity: Activity,
@@ -52,6 +54,7 @@ internal class RequestHandler(
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             if (resultCode == 88858) {
+                requestHandler.intent.putExtra(AuthenticationActivity.END_USER_STATUS, EndUserStatus.FirstPage)
                 requestHandler.startForResult()
                 return
             }

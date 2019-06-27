@@ -9,6 +9,7 @@ import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.helper.setOnTextChange
 import ir.ayantech.ayanvas.model.ConfirmMciSubscriptionInput
 import ir.ayantech.ayanvas.model.EndPoint
+import ir.ayantech.ayanvas.model.EndUserStatus
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_enter_activation.*
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
@@ -50,7 +51,12 @@ internal class EnterActivationFragment : FragmentationFragment() {
             if (it) {
                 try {
                     guideView = GuideView.Builder(activity)
-                        .setContentText(getResponseOfGetServiceInfo()?.ActivationCodeInputHint)
+                        .setContentText(
+                            getResponseOfGetServiceInfo()?.ActivationCodeInputHint?.replace(
+                                "شماره خود",
+                                VasUser.getMobile(activity!!)
+                            )
+                        )
                         .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
                         .setTargetView(activationCodeEt)
                         .setGravity(Gravity.auto)

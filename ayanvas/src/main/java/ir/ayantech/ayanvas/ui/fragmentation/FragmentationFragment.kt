@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.irozon.sneaker.Sneaker
+import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
@@ -48,6 +49,7 @@ abstract class FragmentationFragment : SwipeBackFragment() {
 
     internal fun getResponseOfGetServiceInfo() =
         (activity as AuthenticationActivity).getServiceInfo?.response?.Parameters
+            ?: VasUser.getGetServiceInfo(activity!!)
 
     override fun onSupportVisible() {
         super.onSupportVisible()

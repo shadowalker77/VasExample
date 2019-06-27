@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "82033371072",
-    "firebase_url": "https://effectino-f09d8.firebaseio.com",
-    "project_id": "effectino-f09d8",
-    "storage_bucket": "effectino-f09d8.appspot.com"
+    "project_number": "331975197457",
+    "firebase_url": "https://jadvalium.firebaseio.com",
+    "project_id": "jadvalium",
+    "storage_bucket": "jadvalium.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:82033371072:android:aeadddda8bcae820",
+        "mobilesdk_app_id": "1:331975197457:android:a0866d8e608064e4",
         "android_client_info": {
-          "package_name": "ir.ayantech.vaseffectino"
+          "package_name": "ir.ayantech.vasjadvalium"
         }
       },
       "oauth_client": [
         {
-          "client_id": "82033371072-q7ahqmbdalt2qa06mmlub3gnmr0mc6qg.apps.googleusercontent.com",
+          "client_id": "331975197457-rarc9li5boklujsm73qfjc7tb2ot5q8d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDLfyZydXBUzE-M-QQAA4NmtMqdM5l2R30"
+          "current_key": "AIzaSyBKt7b-EemDNd2v8N-WNoCScT3UHTeHsso"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "82033371072-q7ahqmbdalt2qa06mmlub3gnmr0mc6qg.apps.googleusercontent.com",
+              "client_id": "331975197457-rarc9li5boklujsm73qfjc7tb2ot5q8d.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "331975197457-a2k6an3gunrdcrmp97tnrujm80k326o9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ir.ayantech.vasjadvalium"
+              }
             }
           ]
         }

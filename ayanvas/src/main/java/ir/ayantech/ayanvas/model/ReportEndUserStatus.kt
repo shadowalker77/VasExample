@@ -7,6 +7,14 @@ internal data class ReportEndUserStatusInput(
 )
 
 internal data class ReportEndUserStatusOutput(
-    val RegistrationStatus: String,
-    val Subscribed: Boolean
+    val PageState: String
 )
+
+internal class EndUserStatus {
+    companion object {
+        const val FirstPage = "FirstPage"
+        const val SecondPage = "SecondPage"
+        const val Subscribe = "Subscribe"
+        const val Unsubscribe = "Unsubscribe"
+    }
+}
