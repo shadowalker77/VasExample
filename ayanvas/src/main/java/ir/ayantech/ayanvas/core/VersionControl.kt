@@ -77,7 +77,6 @@ internal class VersionControl(
             "charkhoneh" -> "charkhoneh"
             "cafebazaar" -> "cafebazaar"
             "myket" -> "myket"
-            "website" -> "website"
             else -> "socialmedia"
         }
     }
