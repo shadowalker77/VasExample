@@ -75,6 +75,9 @@ internal class VersionControl(
         return when (applicationUniqueToken.toLowerCase()) {
             "playstore" -> "playstore"
             "charkhoneh" -> "charkhoneh"
+            "cafebazaar" -> "cafebazaar"
+            "myket" -> "myket"
+            "website" -> "website"
             else -> "socialmedia"
         }
     }
