@@ -27,8 +27,9 @@ internal class InformationHelper {
 
         fun getApplicationCategory(applicationUniqueToken: String) = when (applicationUniqueToken.toLowerCase()) {
             "playstore" -> "playstore"
-            "bulk" -> "bulk"
             "charkhoneh" -> "charkhoneh"
+            "cafebazaar" -> "cafebazaar"
+            "myket" -> "myket"
             else -> "socialmedia"
         }
     }

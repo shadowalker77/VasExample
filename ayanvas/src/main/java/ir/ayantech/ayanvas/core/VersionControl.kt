@@ -71,16 +71,6 @@ internal class VersionControl(
         )
     }
 
-    private fun getApplicationCategory(): String {
-        return when (applicationUniqueToken.toLowerCase()) {
-            "playstore" -> "playstore"
-            "charkhoneh" -> "charkhoneh"
-            "cafebazaar" -> "cafebazaar"
-            "myket" -> "myket"
-            else -> "socialmedia"
-        }
-    }
-
     companion object {
         fun shareApp(context: Context, applicationUniqueToken: String) {
             AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
