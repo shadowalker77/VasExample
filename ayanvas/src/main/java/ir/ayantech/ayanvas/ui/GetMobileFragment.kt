@@ -39,7 +39,7 @@ internal class GetMobileFragment : FragmentationFragment() {
                 showAgreementTv.visibility = View.GONE
             showAgreementTv.setHtmlText(AgreementLabel)
             nextTv.setHtmlText(FirstPageButton)
-            if (PriceText.isNullOrEmpty()) priceTv.visibility = View.GONE else priceTv.text = PriceText
+            if (PriceText.isNullOrEmpty()) priceTv.visibility = View.GONE else priceTv.setHtmlText(PriceText)
             showAgreementTv.setOnClickListener {
                 val yesNoDialog = AyanYesNoDialog(activity!!, AgreementTitle, AgreementContent)
                 yesNoDialog.removeNegativeButton()
