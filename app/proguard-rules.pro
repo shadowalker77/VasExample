@@ -32,3 +32,11 @@
 -keep public class ir.ayantech.ayannetworking.** { *; }
 -keep public class ir.ayantech.ayanvas.** { *; }
 -keep public class ir.ayantech.pushnotification.** { *; }
+#-----------------------------------Batch-----------------------------------
+-keep class com.batch.** { *; }
+-keep class com.google.android.gms.** { *; }
+-keep class android.support.v7.app.** { *; }
+-keep class android.support.v4.** { *; }
+-dontwarn com.batch.android.mediation.**
+-dontwarn com.batch.android.BatchPushService
+#-----------------------------------------------------------------------------
