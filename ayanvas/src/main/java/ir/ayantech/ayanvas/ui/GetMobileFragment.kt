@@ -52,10 +52,8 @@ internal class GetMobileFragment : FragmentationFragment() {
                     getAyanApi().ayanCall<Void>(
                         AyanCallStatus {
                             success {
-                                start(EnterActivationFragment().also {
-                                    VasUser.saveMobile(activity!!, mobileNumberEt.text.toString())
-                                    it.mobileNumber = mobileNumberEt.text.toString()
-                                })
+                                VasUser.saveMobile(activity!!, mobileNumberEt.text.toString())
+                                start(EnterActivationFragment())
                             }
                         },
                         EndPoint.RequestMciSubscription,

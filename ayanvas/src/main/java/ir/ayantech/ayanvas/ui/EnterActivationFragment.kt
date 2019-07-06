@@ -9,7 +9,6 @@ import ir.ayantech.ayanvas.helper.setHtmlText
 import ir.ayantech.ayanvas.helper.setOnTextChange
 import ir.ayantech.ayanvas.model.ConfirmMciSubscriptionInput
 import ir.ayantech.ayanvas.model.EndPoint
-import ir.ayantech.ayanvas.model.EndUserStatus
 import ir.ayantech.ayanvas.ui.fragmentation.FragmentationFragment
 import kotlinx.android.synthetic.main.ayan_vas_fragment_enter_activation.*
 import smartdevelop.ir.eram.showcaseviewlib.GuideView
@@ -18,7 +17,6 @@ import smartdevelop.ir.eram.showcaseviewlib.config.Gravity
 
 internal class EnterActivationFragment : FragmentationFragment() {
 
-    lateinit var mobileNumber: String
     private var guideView: GuideView? = null
 
     override fun getLayoutId(): Int = R.layout.ayan_vas_fragment_enter_activation
@@ -35,7 +33,6 @@ internal class EnterActivationFragment : FragmentationFragment() {
                 getAyanApi().ayanCall<Void>(
                     AyanCallStatus {
                         success {
-                            VasUser.saveMobile(activity!!, mobileNumber)
                             (activity as AuthenticationActivity).doCallBack(SubscriptionResult.OK)
                         }
                     },

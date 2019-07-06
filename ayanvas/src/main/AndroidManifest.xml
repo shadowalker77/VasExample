@@ -16,7 +16,8 @@
                  tools:replace="android:allowBackup">
         <activity android:name=".ui.AuthenticationActivity"
                   android:theme="@style/AuthenticationActivityStyle"
-                  android:windowSoftInputMode="adjustResize">
+                  android:windowSoftInputMode="adjustResize"
+                  android:screenOrientation="portrait">
         </activity>
         <provider
                 android:name=".core.MyFileProvider"

@@ -1,6 +1,7 @@
 package ir.ayantech.ayanvas.core
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import ir.ayantech.ayanvas.dialog.AyanCheckStatusDialog
 import ir.ayantech.ayanvas.model.AppExtraInfo
@@ -17,10 +18,11 @@ class AyanCore {
 
         private fun getInstance(): AyanCore = ayanCore ?: AyanCore().also { ayanCore = it }
 
-        fun initialize(context: Context, applicationUniqueToken: String) {
+        fun initialize(application: Application, applicationUniqueToken: String) {
             getInstance().applicationUniqueToken = applicationUniqueToken
-            PushNotificationCore.start(context)
-            PushNotificationCore.reportExtraInfo(context, AppExtraInfo(VasUser.getSession(context)))
+            BatchHandler.initialize(application)
+            PushNotificationCore.start(application)
+            PushNotificationCore.reportExtraInfo(application, AppExtraInfo(VasUser.getSession(application)))
         }
 
         fun startVasSubscription(

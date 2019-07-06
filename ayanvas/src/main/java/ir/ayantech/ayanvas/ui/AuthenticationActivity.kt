@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import com.android.billingclient.util.IabHelper
 import com.android.billingclient.util.MarketIntentFactorySDK
+import com.batch.android.Batch
 import com.irozon.sneaker.Sneaker
 import ir.ayantech.ayannetworking.api.*
 import ir.ayantech.ayannetworking.ayanModel.Failure
@@ -99,18 +100,17 @@ internal class AuthenticationActivity : FragmentationActivity() {
         waiterDialog.hideDialog()
     }
 
-    fun showError(message: String) {
-        Sneaker.with(this)
-            .setTitle("خطا")
-            .autoHide(false)
-            .setMessage(message)
-            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-            .sneakError()
+    private fun initializeBatch() {
+        Batch.onStart(this)
+        Batch.User.editor()
+            .setAttribute("INSTALL", getApplicationUniqueToken())
+            .save()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ayan_vas_activity_authentication)
+        initializeBatch()
         waiterDialog = WaiterDialog(this)
         iconIv.setImageDrawable(getApplicationIcon())
         wp10pbar.showProgressBar()
