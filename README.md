@@ -9,6 +9,21 @@ This library depends on AppCompat and CardView support libraries. So you need to
 implementation 'com.android.support:appcompat-v7:28.0.0'
 implementation 'com.android.support:cardview-v7:28.0.0'
 ```
+And it needs google play services in order to work properly for push notification services. Add this lines for dependecies:
+```java
+implementation 'com.google.firebase:firebase-messaging:17.3.4'
+implementation 'com.google.firebase:firebase-core:16.0.3'
+```
+Add this line to the end of build.gradle for your app module:
+```java
+apply plugin: 'com.google.gms.google-services'
+```
+And add this line to the dependencies section of build.gradle for your project level:
+```java
+classpath 'com.google.gms:google-services:4.2.0'
+```
+Finally put google-services.json file that you have in app folder of your project.
+
 Also it depends on Retrofit with Gson converter. So add these lines if you don't have them:
 ```java
 implementation 'com.google.code.gson:gson:2.8.2'
@@ -32,7 +47,7 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.4.1'
+implementation 'com.github.shadowalker77:vasexample:0.5.1'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml
@@ -40,10 +55,11 @@ After syncing gradle, create a values xml file in project values folder and conf
 <resources>
     <string name="applicationName">applicationName</string>
     <string name="applicationCategory">android</string>
+    <string name="batchAPIKey">your_relevent_batch_api_key</string>
     <string name="applicationType">android</string>
 </resources>
 ```
-**Attention:** You don't need to set application type in most of projects. But configuring application name and category will be needed in all projects.
+**Attention:** You don't need to set application type in most of projects. But configuring application name and category will be needed in all projects. Configuring batch api key is neccessary. 
 # Usage
 You should communicate with this SDK using AyanCore class. In java you should use AyanCore.Companion.* and in kotlin you should use AyanCore.*. Here is an example:
 You should initialize the SDK in your application class. So, here is how you should do it:
@@ -163,4 +179,13 @@ Also if your app **doesn't** supports Irancell authentication, you need to add f
 ```java
 -dontwarn com.android.billingclient.**
 -dontwarn net.jhoobin.jhub.**
+```
+And add this lines for batch proguard rules:
+```java
+-keep class com.batch. { *; }
+-keep class com.google.android.gms. { *; }
+-keep class android.support.v7.app. { *; }
+-keep class android.support.v4. { *; }
+-dontwarn com.batch.android.mediation.**
+-dontwarn com.batch.android.BatchPushService
 ```
