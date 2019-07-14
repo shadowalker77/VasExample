@@ -47,5 +47,9 @@ class AyanCore {
         fun shareApp(context: Context) {
             VersionControl.shareApp(context, getInstance().applicationUniqueToken)
         }
+
+        fun getDownloadLink(context: Context, callback: (downloadLink: String) -> Unit) {
+            VersionControl.getDownloadLink(context, getInstance().applicationUniqueToken, callback)
+        }
     }
 }

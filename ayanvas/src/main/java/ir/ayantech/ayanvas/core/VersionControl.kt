@@ -100,6 +100,34 @@ internal class VersionControl(
 
         }
 
+        fun getDownloadLink(context: Context, applicationUniqueToken: String, callback: (downloadLink: String) -> Unit) {
+            AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
+                .ayanCall<GetLastVersionOutput>(
+                    AyanCallStatus {
+                        success {
+                            callback(it.response?.Parameters?.Link ?: "")
+                        }
+                    },
+                    "GetLastVersion",
+                    GetLastVersionInput(
+                        InformationHelper.getApplicationName(context),
+                        InformationHelper.getApplicationType(context),
+                        InformationHelper.getApplicationCategory(applicationUniqueToken),
+                        InformationHelper.getApplicationVersion(context),
+                        AppExtraInfo(VasUser.getSession(context))
+                    )
+                    , commonCallStatus = AyanCommonCallStatus {
+                        failure {
+                            Toast.makeText(
+                                context,
+                                "لطفا اتصال اینترنت خود را بررسی کرده و دوباره تلاش نمایید.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+
+        }
+
         private fun share(context: Context, shareBody: String) {
             ShareCompat.IntentBuilder.from(context as Activity)
                 .setText(shareBody)

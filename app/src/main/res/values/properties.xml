@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="applicationName">vasjadvalium</string>
+    <string name="batchAPIKey">5D2090EF17B0E787BC62EE14C50EFB</string>
 </resources>
