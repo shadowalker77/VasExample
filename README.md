@@ -68,7 +68,7 @@ After syncing gradle, create a values xml file in project values folder and conf
     <string name="applicationType">android</string>
 </resources>
 ```
-**Attention:** You don't need to set application type in most of projects. But configuring application name and category will be needed in all projects. Configuring batch api key is neccessary. 
+**Attention:** You don't need to set application type in most of projects. But configuring application name and category will be needed in all projects. Configuring batch api key is necessary.
 # Usage
 You should communicate with this SDK using AyanCore class. In java you should use AyanCore.Companion.* and in kotlin you should use AyanCore.*. Here is an example:
 You should initialize the SDK in your application class. So, here is how you should do it:
@@ -165,7 +165,7 @@ AyanCore.isUserSubscribed(this) {
     }
 }
 ```
-**Attention:** it variable is a Boolead which determines the status of user subscription.
+**Attention:** it variable is a Boolean which determines the status of user subscription.
 **Important:** it variable may be null which means checking for user subscription has been failed due to some reason like lack of the internet.
 # Share app
 In order to properly share a valid link of app with proper descriptions, just call this method:
