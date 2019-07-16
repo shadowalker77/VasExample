@@ -14,13 +14,22 @@ And it needs google play services in order to work properly for push notificatio
 implementation 'com.google.firebase:firebase-messaging:17.3.4'
 implementation 'com.google.firebase:firebase-core:16.0.3'
 ```
+Add this line to the beginning of of build.gradle for your app module:
+```java
+apply plugin: 'io.fabric'
+```
 Add this line to the end of build.gradle for your app module:
 ```java
 apply plugin: 'com.google.gms.google-services'
 ```
-And add this line to the dependencies section of build.gradle for your project level:
+And add these lines to the dependencies section of build.gradle for your project level:
 ```java
 classpath 'com.google.gms:google-services:4.2.0'
+classpath 'io.fabric.tools:gradle:1.30.0'
+```
+And this line to the repositories section of build.gradle for your project level:
+```java
+maven { url 'https://maven.fabric.io/public' }
 ```
 Finally put google-services.json file that you have in app folder of your project.
 
@@ -47,7 +56,7 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.5.2'
+implementation 'com.github.shadowalker77:vasexample:0.6.0'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml
