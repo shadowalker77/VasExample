@@ -56,7 +56,7 @@ allprojects {
 ```
 And then add this line to module level gradle file:
 ```java
-implementation 'com.github.shadowalker77:vasexample:0.6.0'
+implementation 'com.github.shadowalker77:vasexample:0.7.0'
 ```
 After syncing gradle, create a values xml file in project values folder and config this strings properly with given values:
 ```xml
@@ -176,6 +176,24 @@ AyanCore.Companion.shareApp(context)
 * kotlin:
 ```kotlin
 AyanCore.shareApp(context)
+```
+# Get User Information
+For getting information of user, use below method:
+* JAVA:
+```java
+AyanCore.Companion.getUserInfo(this, new Function1<TokenInfo, Unit>() {
+    @Override
+    public Unit invoke(TokenInfo tokenInfo) {
+        Log.d("UserMob", tokenInfo.getMobileNumber());
+        return null;
+    }
+});
+```
+* kotlin:
+```kotlin
+AyanCore.getUserInfo(this) {
+    Log.d("UserMob", it.MobileNumber)
+}
 ```
 # Progurad
 If progurad is enabled for your project, you need to add Retrofit, Gson and OkHttp proguard rules depending of which version you are using. Also, you need to add this line to your proguard file:

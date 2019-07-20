@@ -2,6 +2,7 @@ package ir.ayantech.ayanvas.dialog
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -178,5 +179,19 @@ class AyanCheckStatusDialog(
         ).ayanCall<Void>(AyanCallStatus { }, EndPoint.ReportUnsubscription)
         VasUser.removeUserMobileNumber(activity)
         VasUser.removeSession(activity)
+    }
+
+    fun getTokenInfo(context: Context, callback: (TokenInfo) -> Unit) {
+        AyanApi(
+            { VasUser.getSession(context) },
+            "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
+        ).ayanCall<TokenInfo>(
+            AyanCallStatus {
+                success {
+                    callback(it.response?.Parameters!!)
+                }
+            },
+            EndPoint.GetTokenInfo
+        )
     }
 }

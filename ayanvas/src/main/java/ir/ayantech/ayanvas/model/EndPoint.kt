@@ -12,6 +12,7 @@ internal class EndPoint {
         const val ReportNewDevice = "ReportNewDevice"
         const val ReportUnsubscription = "ReportUnsubscription"
         const val RequestMciSubscription = "RequestMciSubscription"
+        const val GetTokenInfo = "GetTokenInfo"
     }
 }
 

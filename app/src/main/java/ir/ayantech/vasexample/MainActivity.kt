@@ -37,4 +37,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun getUserInfo() {
+        AyanCore.getUserInfo(this) {
+            Log.d("UserMob", it.MobileNumber)
+        }
+    }
 }

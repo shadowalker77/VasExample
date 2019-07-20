@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import ir.ayantech.ayanvas.core.AyanCore;
 import ir.ayantech.ayanvas.core.SubscriptionResult;
+import ir.ayantech.ayanvas.model.TokenInfo;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -40,6 +41,16 @@ public class TestActivity extends AppCompatActivity {
                 if (aBoolean == null) Log.d("SubscriptionStatus", "checking failed for some reasons");
                 else if (aBoolean) Log.d("SubscriptionStatus", "user is subscribed");
                 else Log.d("SubscriptionStatus", "user is not subscribed");
+                return null;
+            }
+        });
+    }
+
+    private void getUserInfo() {
+        AyanCore.Companion.getUserInfo(this, new Function1<TokenInfo, Unit>() {
+            @Override
+            public Unit invoke(TokenInfo tokenInfo) {
+                Log.d("UserMob", tokenInfo.getMobileNumber());
                 return null;
             }
         });

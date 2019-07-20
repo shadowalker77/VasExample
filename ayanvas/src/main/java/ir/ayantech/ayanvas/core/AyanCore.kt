@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import ir.ayantech.ayanvas.dialog.AyanCheckStatusDialog
 import ir.ayantech.ayanvas.model.AppExtraInfo
+import ir.ayantech.ayanvas.model.TokenInfo
 import ir.ayantech.pushnotification.core.PushNotificationCore
 
 class AyanCore {
@@ -50,6 +51,10 @@ class AyanCore {
 
         fun getDownloadLink(context: Context, callback: (downloadLink: String) -> Unit) {
             VersionControl.getDownloadLink(context, getInstance().applicationUniqueToken, callback)
+        }
+
+        fun getUserInfo(context: Context, callback: (TokenInfo) -> Unit) {
+            getInstance().ayanCheckStatusDialog.getTokenInfo(context, callback)
         }
     }
 }
