@@ -1,6 +1,7 @@
 package ir.ayantech.ayanvas.ui
 
 import android.view.View
+import com.batch.android.Batch
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayanvas.R
 import ir.ayantech.ayanvas.core.SubscriptionResult
@@ -49,9 +50,12 @@ internal class GetMobileFragment : FragmentationFragment() {
                 yesNoDialog.show()
             }
             nextTv.setOnClickListener {
-                if (!isProduction() && getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.NOTHING)
+                if (!isProduction() && getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.NOTHING) {
+                    Batch.User.editor()
+                        .setAttribute("NUMBERSENT", (activity as AuthenticationActivity).getApplicationUniqueToken())
+                        .save()
                     (activity as AuthenticationActivity).doCallBack(SubscriptionResult.OK)
-                else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MCI_REGISTER) {
+                } else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MCI_REGISTER) {
                     getAyanApi().ayanCall<Void>(
                         AyanCallStatus {
                             success {

@@ -194,7 +194,7 @@ internal class AuthenticationActivity : FragmentationActivity() {
 
     fun isProduction() = intent.getBooleanExtra(VAS_SDK_IS_PRODUCTION, true)
 
-    private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
+    fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 
     private fun getEndUserStatus() = intent.getStringExtra(END_USER_STATUS)
 
