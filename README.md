@@ -67,7 +67,6 @@ After syncing gradle, create a values xml file in project values folder and conf
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="applicationName">applicationName</string>
-    <string name="applicationCategory">android</string>
     <string name="batchAPIKey">your_relevent_batch_api_key</string>
     <string name="applicationType">android</string>
 </resources>
