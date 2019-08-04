@@ -12,6 +12,7 @@ class AyanCore {
 
     lateinit var applicationUniqueToken: String
     private lateinit var ayanCheckStatusDialog: AyanCheckStatusDialog
+    private var isProduction = true
 
     companion object {
 
@@ -19,8 +20,9 @@ class AyanCore {
 
         private fun getInstance(): AyanCore = ayanCore ?: AyanCore().also { ayanCore = it }
 
-        fun initialize(application: Application, applicationUniqueToken: String) {
+        fun initialize(application: Application, applicationUniqueToken: String, isProduction: Boolean = true) {
             getInstance().applicationUniqueToken = applicationUniqueToken
+            getInstance().isProduction = isProduction
             BatchHandler.initialize(application)
             PushNotificationCore.start(application)
             PushNotificationCore.reportExtraInfo(application, AppExtraInfo(VasUser.getSession(application)))
@@ -31,7 +33,12 @@ class AyanCore {
             callback: (SubscriptionResult) -> Unit
         ) {
             getInstance().ayanCheckStatusDialog =
-                AyanCheckStatusDialog(activity, getInstance().applicationUniqueToken, callback)
+                AyanCheckStatusDialog(
+                    activity,
+                    getInstance().applicationUniqueToken,
+                    getInstance().isProduction,
+                    callback
+                )
             getInstance().ayanCheckStatusDialog.show()
         }
 

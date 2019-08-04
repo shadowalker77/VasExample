@@ -13,7 +13,7 @@ This library depends on AppCompat and CardView support libraries. So you need to
 implementation 'com.android.support:appcompat-v7:28.0.0'
 implementation 'com.android.support:cardview-v7:28.0.0'
 ```
-And it needs google play services in order to work properly for push notification services. Add this lines for dependecies:
+And it needs google play services in order to work properly for push notification services. Add this lines for dependencies:
 ```java
 implementation 'com.google.firebase:firebase-messaging:17.3.4'
 implementation 'com.google.firebase:firebase-core:16.0.3'

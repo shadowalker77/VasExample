@@ -51,6 +51,8 @@ abstract class FragmentationFragment : SwipeBackFragment() {
         (activity as AuthenticationActivity).getServiceInfo?.response?.Parameters
             ?: VasUser.getGetServiceInfo(activity!!)
 
+    internal fun isProduction() = (activity as AuthenticationActivity).isProduction()
+
     override fun onSupportVisible() {
         super.onSupportVisible()
         try {

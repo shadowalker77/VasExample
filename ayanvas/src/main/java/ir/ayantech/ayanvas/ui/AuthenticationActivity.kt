@@ -38,16 +38,19 @@ internal class AuthenticationActivity : FragmentationActivity() {
 
     companion object {
         private const val VAS_APPLICATION_UNIQUE_TOKEN = "vasApplicationUniqueTokenTag"
+        private const val VAS_SDK_IS_PRODUCTION = "vasApplicationIsProduction"
         const val END_USER_STATUS = "vasEndUserStatusTag"
 
         fun getProperIntent(
             context: Context,
             vasApplicationUniqueToken: String,
-            endUserStatus: String
+            endUserStatus: String,
+            isProduction: Boolean
         ): Intent {
             val intent = Intent(context, AuthenticationActivity::class.java)
             intent.putExtra(VAS_APPLICATION_UNIQUE_TOKEN, vasApplicationUniqueToken)
             intent.putExtra(END_USER_STATUS, endUserStatus)
+            intent.putExtra(VAS_SDK_IS_PRODUCTION, isProduction)
             return intent
         }
     }
@@ -158,7 +161,14 @@ internal class AuthenticationActivity : FragmentationActivity() {
                 success {
                     VasUser.saveGetServiceInfo(this@AuthenticationActivity, it.response?.Parameters!!)
                     when {
-                        it.response?.Parameters?.Action == GetServiceInfoAction.NOTHING -> doCallBack(SubscriptionResult.OK)
+                        it.response?.Parameters?.Action == GetServiceInfoAction.NOTHING -> {
+                            if (isProduction())
+                                doCallBack(SubscriptionResult.OK)
+                            else
+                                loadRootFragment(
+                                    R.id.fragmentContainerFl,
+                                    GetMobileFragment().also { it.endUserStatus = getEndUserStatus() })
+                        }
                         it.response?.Parameters?.Action == GetServiceInfoAction.CHOOSE_OPERATOR -> loadRootFragment(
                             R.id.fragmentContainerFl,
                             ChooseOperatorFragment()
@@ -181,6 +191,8 @@ internal class AuthenticationActivity : FragmentationActivity() {
         setResult(subscriptionResult.value)
         finish()
     }
+
+    fun isProduction() = intent.getBooleanExtra(VAS_SDK_IS_PRODUCTION, true)
 
     private fun getApplicationUniqueToken() = intent.getStringExtra(VAS_APPLICATION_UNIQUE_TOKEN)
 

@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.ayan_dialog_check_status.*
 class AyanCheckStatusDialog(
     val activity: Activity,
     private val applicationUniqueToken: String,
+    private val isProduction: Boolean,
     val callback: (SubscriptionResult) -> Unit
 ) : Dialog(activity) {
 
@@ -78,7 +79,7 @@ class AyanCheckStatusDialog(
 
     private fun start() {
         if (VasUser.getSession(activity).isEmpty()) {
-            startSubscription(activity, applicationUniqueToken, EndUserStatus.FirstPage, callback)
+            startSubscription(activity, applicationUniqueToken, EndUserStatus.FirstPage, isProduction, callback)
         } else {
             AyanApi(
                 { VasUser.getSession(activity) },
@@ -92,12 +93,14 @@ class AyanCheckStatusDialog(
                                 activity,
                                 applicationUniqueToken,
                                 it.response?.Parameters?.PageState!!,
+                                isProduction,
                                 callback
                             )
                             EndUserStatus.SecondPage -> startSubscription(
                                 activity,
                                 applicationUniqueToken,
                                 it.response?.Parameters?.PageState!!,
+                                isProduction,
                                 callback
                             )
                             EndUserStatus.Unsubscribe -> {
@@ -106,6 +109,7 @@ class AyanCheckStatusDialog(
                                     activity,
                                     applicationUniqueToken,
                                     it.response?.Parameters?.PageState!!,
+                                    isProduction,
                                     callback
                                 )
                             }
@@ -137,13 +141,15 @@ class AyanCheckStatusDialog(
         activity: Activity,
         applicationUniqueToken: String,
         endUserStatus: String,
+        isProduction: Boolean,
         callback: (SubscriptionResult) -> Unit
     ) {
         requestHandler = RequestHandler(
             activity, AuthenticationActivity.getProperIntent(
                 activity,
                 applicationUniqueToken,
-                endUserStatus
+                endUserStatus,
+                isProduction
             ),
             callback
         )

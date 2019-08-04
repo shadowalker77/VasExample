@@ -3,6 +3,7 @@ package ir.ayantech.ayanvas.ui
 import android.view.View
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayanvas.R
+import ir.ayantech.ayanvas.core.SubscriptionResult
 import ir.ayantech.ayanvas.core.VasUser
 import ir.ayantech.ayanvas.dialog.AyanYesNoDialog
 import ir.ayantech.ayanvas.helper.loadBase64
@@ -48,7 +49,9 @@ internal class GetMobileFragment : FragmentationFragment() {
                 yesNoDialog.show()
             }
             nextTv.setOnClickListener {
-                if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MCI_REGISTER) {
+                if (!isProduction() && getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.NOTHING)
+                    (activity as AuthenticationActivity).doCallBack(SubscriptionResult.OK)
+                else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MCI_REGISTER) {
                     getAyanApi().ayanCall<Void>(
                         AyanCallStatus {
                             success {
