@@ -52,7 +52,7 @@ internal class GetMobileFragment : FragmentationFragment() {
             nextTv.setOnClickListener {
                 if (!isProduction() && getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.NOTHING) {
                     Batch.User.editor()
-                        .setAttribute("NUMBERSENT", (activity as AuthenticationActivity).getApplicationUniqueToken())
+                        .setAttribute("NUMBERSENT", mobileNumberEt.text.toString())
                         .save()
                     (activity as AuthenticationActivity).doCallBack(SubscriptionResult.OK)
                 } else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MCI_REGISTER) {

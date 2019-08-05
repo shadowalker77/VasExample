@@ -19,7 +19,7 @@ internal class VersionControl(
 ) {
 
     val ayanApi = AyanApi(
-        defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/",
+        defaultBaseUrl = "https://versioncontrol.infra.ayantech.ir/WebServices/App.svc/",
         commonCallStatus = ayanCommonCallStatus
     )
 
