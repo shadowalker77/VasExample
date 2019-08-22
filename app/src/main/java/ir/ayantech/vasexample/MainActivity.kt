@@ -21,6 +21,12 @@ class MainActivity : AppCompatActivity() {
                     SubscriptionResult.TIMEOUT -> Log.d("Subscription", "TIMEOUT")
                     SubscriptionResult.UNKNOWN -> Log.d("Subscription", "UNKNOWN")
                 }
+                AyanCore.getRemoteConfig(this, "traffic_fines_inquiry", "nothing") {
+                    Log.d("RemoteValue", it)
+                }
+                AyanCore.getRemoteConfig(this, "chert", "nothing") {
+                    Log.d("RemoteValue", it)
+                }
             }
         }
         logoutBtn.setOnClickListener {

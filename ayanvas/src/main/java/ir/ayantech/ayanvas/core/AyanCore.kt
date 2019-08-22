@@ -11,14 +11,14 @@ import ir.ayantech.pushnotification.core.PushNotificationCore
 class AyanCore {
 
     lateinit var applicationUniqueToken: String
-    private lateinit var ayanCheckStatusDialog: AyanCheckStatusDialog
+    lateinit var ayanCheckStatusDialog: AyanCheckStatusDialog
     private var isProduction = true
 
     companion object {
 
         var ayanCore: AyanCore? = null
 
-        private fun getInstance(): AyanCore = ayanCore ?: AyanCore().also { ayanCore = it }
+        fun getInstance(): AyanCore = ayanCore ?: AyanCore().also { ayanCore = it }
 
         fun initialize(application: Application, applicationUniqueToken: String, isProduction: Boolean = true) {
             getInstance().applicationUniqueToken = applicationUniqueToken
@@ -62,6 +62,15 @@ class AyanCore {
 
         fun getUserInfo(context: Context, callback: (TokenInfo) -> Unit) {
             getInstance().ayanCheckStatusDialog.getTokenInfo(context, callback)
+        }
+
+        inline fun <reified T> getRemoteConfig(
+            context: Context,
+            fieldName: String,
+            defaultValue: T,
+            crossinline callback: (T) -> Unit
+        ) {
+            getInstance().ayanCheckStatusDialog.getRemoteConfig(context, fieldName, defaultValue, callback)
         }
     }
 }

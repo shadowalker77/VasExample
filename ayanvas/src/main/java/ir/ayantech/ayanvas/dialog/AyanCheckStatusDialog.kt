@@ -21,6 +21,7 @@ import ir.ayantech.ayanvas.helper.InformationHelper
 import ir.ayantech.ayanvas.model.*
 import ir.ayantech.ayanvas.ui.AuthenticationActivity
 import kotlinx.android.synthetic.main.ayan_dialog_check_status.*
+import org.json.JSONObject
 
 class AyanCheckStatusDialog(
     val activity: Activity,
@@ -199,5 +200,29 @@ class AyanCheckStatusDialog(
             },
             EndPoint.GetTokenInfo
         )
+    }
+
+    inline fun <reified T> getRemoteConfig(
+        context: Context,
+        fieldName: String,
+        defaultValue: T,
+        crossinline callback: (T) -> Unit
+    ) {
+        getTokenInfo(context) {
+            try {
+                val remoteConfigObject = JSONObject(it.RemoteConfig)
+                callback(
+                    when (defaultValue) {
+                        is String -> remoteConfigObject.getString(fieldName) as T
+                        is Boolean -> remoteConfigObject.getBoolean(fieldName) as T
+                        is Long -> remoteConfigObject.getLong(fieldName) as T
+                        is Int -> remoteConfigObject.getInt(fieldName) as T
+                        else -> defaultValue
+                    }
+                )
+            } catch (e: Exception) {
+                callback(defaultValue)
+            }
+        }
     }
 }
