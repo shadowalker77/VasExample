@@ -1,5 +1,5 @@
 package ir.ayantech.ayanvas.core
 
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 
 class MyFileProvider : FileProvider()

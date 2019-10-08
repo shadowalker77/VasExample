@@ -2,7 +2,7 @@ package ir.ayantech.ayanvas.core
 
 import android.app.Activity
 import android.content.Context
-import android.support.v4.app.ShareCompat
+import androidx.core.app.ShareCompat
 import android.widget.Toast
 import ir.ayantech.ayannetworking.api.AyanApi
 import ir.ayantech.ayannetworking.api.AyanCallStatus
