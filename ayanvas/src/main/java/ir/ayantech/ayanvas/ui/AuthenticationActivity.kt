@@ -26,12 +26,13 @@ import ir.ayantech.pushnotification.core.PushNotificationCore
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
 import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
+import me.yokeyword.fragmentation.SupportActivity
 import net.jhoobin.jhub.CharkhoneSdkApp
 import net.jhoobin.jhub.util.AccountUtil
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
-internal class AuthenticationActivity : FragmentationActivity() {
+internal class AuthenticationActivity : SupportActivity() {
 
     private lateinit var iabHelper: IabHelper
     private lateinit var waiterDialog: WaiterDialog
