@@ -10,7 +10,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -29,15 +29,15 @@ dependencies {
     compileOnly 'androidx.cardview:cardview:1.0.0'
 
     compileOnly 'com.google.code.gson:gson:2.8.5'
-    compileOnly 'com.squareup.retrofit2:converter-gson:2.5.0'
+    compileOnly 'com.squareup.retrofit2:converter-gson:2.6.0'
     compileOnly 'com.squareup.okhttp3:okhttp:3.12.1'
 
-    compileOnly 'com.google.firebase:firebase-messaging:20.0.0'
-    compileOnly 'com.google.firebase:firebase-core:17.2.0'
+    compileOnly 'com.google.firebase:firebase-messaging:20.0.1'
+    compileOnly 'com.google.firebase:firebase-core:17.2.1'
 
     implementation 'com.github.shadowalker77:samplepush:0.1.0'
 
-    implementation 'com.github.shadowalker77:networking:0.2.1'
+    implementation 'com.github.shadowalker77:networking:0.3.2'
 
     implementation 'me.yokeyword:fragmentationx:1.0.1'
     implementation 'me.yokeyword:fragmentationx-swipeback:1.0.1'
