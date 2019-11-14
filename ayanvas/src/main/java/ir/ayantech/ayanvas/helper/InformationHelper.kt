@@ -30,6 +30,7 @@ internal class InformationHelper {
             "charkhoneh" -> "charkhoneh"
             "cafebazaar" -> "cafebazaar"
             "myket" -> "myket"
+            "bulk" -> "bulk"
             else -> "socialmedia"
         }
     }
