@@ -79,6 +79,7 @@ internal class AuthenticationActivity : SupportActivity() {
     }
 
     val ayanApi = AyanApi(
+        this,
         { VasUser.getSession(this) },
         "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/",
         ayanCommonCallingStatus
