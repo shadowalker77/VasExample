@@ -66,9 +66,10 @@ internal class GetMobileFragment : FragmentationFragment() {
                         EndPoint.RequestMciSubscription,
                         RequestMciSubscriptionInput(mobileNumberEt.text.toString())
                     )
-                } else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MTN_REGISTER) {
-                    (activity as AuthenticationActivity).irancellSubscription()
                 }
+//                else if (getResponseOfGetServiceInfo()?.Action == GetServiceInfoAction.MTN_REGISTER) {
+//                    (activity as AuthenticationActivity).irancellSubscription()
+//                }
             }
             chooseOperatorIv.setOnClickListener {
                 start(ChooseOperatorFragment())

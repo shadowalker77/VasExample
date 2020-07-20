@@ -5,8 +5,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.ViewGroup
-import com.android.billingclient.util.IabHelper
-import com.android.billingclient.util.MarketIntentFactorySDK
 import com.batch.android.Batch
 import com.irozon.sneaker.Sneaker
 import ir.ayantech.ayannetworking.api.*
@@ -21,20 +19,15 @@ import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getApplicationVers
 import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getInstalledApps
 import ir.ayantech.ayanvas.helper.InformationHelper.Companion.getOperatorName
 import ir.ayantech.ayanvas.model.*
-import ir.ayantech.ayanvas.ui.fragmentation.FragmentationActivity
-import ir.ayantech.pushnotification.core.PushNotificationCore
+import ir.ayantech.pushsdk.core.AyanNotification
 import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.*
-import kotlinx.android.synthetic.main.ayan_vas_activity_authentication.iconIv
-import kotlinx.android.synthetic.main.ayan_vas_fragment_get_mobile.*
 import me.yokeyword.fragmentation.SupportActivity
-import net.jhoobin.jhub.CharkhoneSdkApp
-import net.jhoobin.jhub.util.AccountUtil
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
 internal class AuthenticationActivity : SupportActivity() {
 
-    private lateinit var iabHelper: IabHelper
+//    private lateinit var iabHelper: IabHelper
     private lateinit var waiterDialog: WaiterDialog
 
     companion object {
@@ -129,11 +122,11 @@ internal class AuthenticationActivity : SupportActivity() {
             ayanApi.ayanCall<ReportNewDeviceOutput>(
                 AyanCallStatus {
                     success {
-                        VasUser.saveSession(this@AuthenticationActivity, it.response?.Parameters?.Token!!)
-                        PushNotificationCore.reportExtraInfo(
+                        VasUser.saveSession(
                             this@AuthenticationActivity,
-                            AppExtraInfo(it.response?.Parameters?.Token!!)
+                            it.response?.Parameters?.Token!!
                         )
+                        AyanNotification.reportExtraInfo(AppExtraInfo(it.response?.Parameters?.Token!!))
                         callGetServiceInfo()
                     }
                 },
@@ -144,7 +137,11 @@ internal class AuthenticationActivity : SupportActivity() {
                     VasUser.getApplicationUniqueId(this@AuthenticationActivity),
                     getApplicationUniqueToken(),
                     getApplicationVersion(this),
-                    ReportNewDeviceExtraInfo(packageName, getInstalledApps(this), getApplicationVersion(this)),
+                    ReportNewDeviceExtraInfo(
+                        packageName,
+                        getInstalledApps(this),
+                        getApplicationVersion(this)
+                    ),
                     getOperatorName(this)
                 )
                 , hasIdentity = false
@@ -161,7 +158,10 @@ internal class AuthenticationActivity : SupportActivity() {
         getServiceInfo = ayanApi.ayanCall(
             AyanCallStatus {
                 success {
-                    VasUser.saveGetServiceInfo(this@AuthenticationActivity, it.response?.Parameters!!)
+                    VasUser.saveGetServiceInfo(
+                        this@AuthenticationActivity,
+                        it.response?.Parameters!!
+                    )
                     when {
                         it.response?.Parameters?.Action == GetServiceInfoAction.NOTHING -> {
                             if (isProduction())
@@ -169,7 +169,9 @@ internal class AuthenticationActivity : SupportActivity() {
                             else
                                 loadRootFragment(
                                     R.id.fragmentContainerFl,
-                                    GetMobileFragment().also { it.endUserStatus = getEndUserStatus() })
+                                    GetMobileFragment().also {
+                                        it.endUserStatus = getEndUserStatus()
+                                    })
                         }
                         it.response?.Parameters?.Action == GetServiceInfoAction.CHOOSE_OPERATOR -> loadRootFragment(
                             R.id.fragmentContainerFl,
@@ -177,7 +179,9 @@ internal class AuthenticationActivity : SupportActivity() {
                         )
                         it.response?.Parameters?.ShowSliders == true -> loadRootFragment(
                             R.id.fragmentContainerFl,
-                            IntroductionFragment().also { frag -> frag.sliders = it.response?.Parameters?.Sliders!! }
+                            IntroductionFragment().also { frag ->
+                                frag.sliders = it.response?.Parameters?.Sliders!!
+                            }
                         )
                         else -> loadRootFragment(
                             R.id.fragmentContainerFl,
@@ -200,67 +204,70 @@ internal class AuthenticationActivity : SupportActivity() {
 
     private fun getEndUserStatus() = intent.getStringExtra(END_USER_STATUS)
 
-    fun irancellSubscription() {
-        CharkhoneSdkApp.initSdk(
-            applicationContext,
-            getServiceInfo?.response?.Parameters?.Secrets?.toTypedArray()
-        )
-        AccountUtil.removeAccount()
-        val fillInIntent = Intent()
-        fillInIntent.putExtra("msisdn", mobileNumberEt.text.toString())
-        fillInIntent.putExtra("editAble", false)
-        iabHelper = IabHelper(
-            this,
-            getServiceInfo?.response?.Parameters?.PublicKeyBase64,
-            MarketIntentFactorySDK(true)
-        )
-        iabHelper.setFillInIntent(fillInIntent)
-        iabHelper.startSetup {
-            if (!it.isSuccess) return@startSetup
-            iabHelper.launchSubscriptionPurchaseFlow(
-                this,
-                getServiceInfo?.response?.Parameters?.Sku,
-                400
-            ) { iabResult, purchase ->
-                if (iabResult.isFailure) {
-                    doCallBack(SubscriptionResult.CANCELED)
-                    return@launchSubscriptionPurchaseFlow
-                }
-                ayanApi.ayanCall<Void>(
-                    AyanCallStatus {
-                        success {
-                            VasUser.saveMobile(this@AuthenticationActivity, mobileNumberEt.text.toString())
-                            doCallBack(SubscriptionResult.OK)
-                        }
-                    },
-                    EndPoint.ReportMtnSubscription,
-                    ReportMtnSubscriptionInput(
-                        purchase.developerPayload,
-                        purchase.isAutoRenewing,
-                        purchase.itemType,
-                        purchase.msisdn,
-                        purchase.orderId,
-                        purchase.originalJson,
-                        purchase.packageName,
-                        purchase.purchaseTime,
-                        purchase.purchaseState,
-                        purchase.signature,
-                        purchase.sku,
-                        purchase.token
-                    )
-                )
-            }
-        }
-    }
+//    fun irancellSubscription() {
+//        CharkhoneSdkApp.initSdk(
+//            applicationContext,
+//            getServiceInfo?.response?.Parameters?.Secrets?.toTypedArray()
+//        )
+//        AccountUtil.removeAccount()
+//        val fillInIntent = Intent()
+//        fillInIntent.putExtra("msisdn", mobileNumberEt.text.toString())
+//        fillInIntent.putExtra("editAble", false)
+//        iabHelper = IabHelper(
+//            this,
+//            getServiceInfo?.response?.Parameters?.PublicKeyBase64,
+//            MarketIntentFactorySDK(true)
+//        )
+//        iabHelper.setFillInIntent(fillInIntent)
+//        iabHelper.startSetup {
+//            if (!it.isSuccess) return@startSetup
+//            iabHelper.launchSubscriptionPurchaseFlow(
+//                this,
+//                getServiceInfo?.response?.Parameters?.Sku,
+//                400
+//            ) { iabResult, purchase ->
+//                if (iabResult.isFailure) {
+//                    doCallBack(SubscriptionResult.CANCELED)
+//                    return@launchSubscriptionPurchaseFlow
+//                }
+//                ayanApi.ayanCall<Void>(
+//                    AyanCallStatus {
+//                        success {
+//                            VasUser.saveMobile(
+//                                this@AuthenticationActivity,
+//                                mobileNumberEt.text.toString()
+//                            )
+//                            doCallBack(SubscriptionResult.OK)
+//                        }
+//                    },
+//                    EndPoint.ReportMtnSubscription,
+//                    ReportMtnSubscriptionInput(
+//                        purchase.developerPayload,
+//                        purchase.isAutoRenewing,
+//                        purchase.itemType,
+//                        purchase.msisdn,
+//                        purchase.orderId,
+//                        purchase.originalJson,
+//                        purchase.packageName,
+//                        purchase.purchaseTime,
+//                        purchase.purchaseState,
+//                        purchase.signature,
+//                        purchase.sku,
+//                        purchase.token
+//                    )
+//                )
+//            }
+//        }
+//    }
 
     fun restart() {
         setResult(88858)
         this.finish()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (!iabHelper.handleActivityResult(requestCode, resultCode, data))
-            super.onActivityResult(requestCode, resultCode, data)
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if (!iabHelper.handleActivityResult(requestCode, resultCode, data))
+//            super.onActivityResult(requestCode, resultCode, data)
+//    }
 }
 

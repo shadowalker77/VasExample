@@ -6,7 +6,7 @@ import android.content.Context
 import ir.ayantech.ayanvas.dialog.AyanCheckStatusDialog
 import ir.ayantech.ayanvas.model.AppExtraInfo
 import ir.ayantech.ayanvas.model.TokenInfo
-import ir.ayantech.pushnotification.core.PushNotificationCore
+import ir.ayantech.pushsdk.core.AyanNotification
 
 class AyanCore {
 
@@ -24,8 +24,8 @@ class AyanCore {
             getInstance().applicationUniqueToken = applicationUniqueToken
             getInstance().isProduction = isProduction
             BatchHandler.initialize(application)
-            PushNotificationCore.start(application)
-            PushNotificationCore.reportExtraInfo(application, AppExtraInfo(VasUser.getSession(application)))
+            AyanNotification.initialize(application)
+            AyanNotification.reportExtraInfo(AppExtraInfo(VasUser.getSession(application)))
         }
 
         fun startVasSubscription(
