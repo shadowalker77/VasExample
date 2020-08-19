@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
-        versionName "1.2.0"
+        versionName "1.2.1"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 
 //    implementation 'com.github.shadowalker77:samplepush:0.2.1'
-    implementation 'com.github.shadowalker77:pushnotification:0.4.5'
+    implementation 'com.github.shadowalker77:pushnotification:0.4.6'
 
     compileOnly 'com.github.shadowalker77:networking:0.7.3'
 
