@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
-        versionName "1.2.1"
+        versionName "1.2.2"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     compileOnly 'com.google.code.gson:gson:2.8.6'
@@ -36,15 +36,15 @@ dependencies {
 
     compileOnly 'com.google.firebase:firebase-messaging:20.2.3'
     compileOnly 'com.google.firebase:firebase-core:17.4.4'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
 //    implementation 'com.github.shadowalker77:samplepush:0.2.1'
-    implementation 'com.github.shadowalker77:pushnotification:0.4.6'
+    implementation 'com.github.shadowalker77:pushnotification:0.4.7'
 
     compileOnly 'com.github.shadowalker77:networking:0.7.3'
 
-    implementation 'me.yokeyword:fragmentationx:1.0.1'
-    implementation 'me.yokeyword:fragmentationx-swipeback:1.0.1'
+    implementation 'me.yokeyword:fragmentationx:1.0.2'
+    implementation 'me.yokeyword:fragmentationx-swipeback:1.0.2'
 
     implementation 'com.irozon.sneaker:sneaker:1.0.3'
     implementation 'com.github.shadowalker77:wp7progressbar:1.0.5'
