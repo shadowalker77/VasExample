@@ -2,8 +2,8 @@ package ir.ayantech.ayanvas.core
 
 import android.app.Activity
 import android.content.Context
-import androidx.core.app.ShareCompat
 import android.widget.Toast
+import androidx.core.app.ShareCompat
 import ir.ayantech.ayannetworking.api.AyanApi
 import ir.ayantech.ayannetworking.api.AyanCallStatus
 import ir.ayantech.ayannetworking.api.AyanCommonCallStatus
@@ -19,7 +19,7 @@ internal class VersionControl(
 ) {
 
     val ayanApi = AyanApi(
-        defaultBaseUrl = "https://versioncontrol.infra.ayantech.ir/WebServices/App.svc/",
+        defaultBaseUrl = defaultBaseUrl,
         commonCallStatus = ayanCommonCallStatus
     )
 
@@ -72,8 +72,13 @@ internal class VersionControl(
     }
 
     companion object {
+
+        const val defaultBaseUrl = "https://versioncontrol.infra.ayantech.ir/WebServices/App.svc/"
+
         fun shareApp(context: Context, applicationUniqueToken: String) {
-            AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
+            AyanApi(
+                defaultBaseUrl = defaultBaseUrl
+            )
                 .ayanCall<GetLastVersionOutput>(
                     AyanCallStatus {
                         success {
@@ -87,8 +92,7 @@ internal class VersionControl(
                         InformationHelper.getApplicationCategory(applicationUniqueToken),
                         InformationHelper.getApplicationVersion(context),
                         AppExtraInfo(VasUser.getSession(context))
-                    )
-                    , commonCallStatus = AyanCommonCallStatus {
+                    ), commonCallStatus = AyanCommonCallStatus {
                         failure {
                             Toast.makeText(
                                 context,
@@ -100,8 +104,12 @@ internal class VersionControl(
 
         }
 
-        fun getDownloadLink(context: Context, applicationUniqueToken: String, callback: (downloadLink: String) -> Unit) {
-            AyanApi(defaultBaseUrl = "http://versioncontrol.infra.ayantech.ir/WebServices/App.svc/")
+        fun getDownloadLink(
+            context: Context,
+            applicationUniqueToken: String,
+            callback: (downloadLink: String) -> Unit
+        ) {
+            AyanApi(defaultBaseUrl = defaultBaseUrl)
                 .ayanCall<GetLastVersionOutput>(
                     AyanCallStatus {
                         success {
@@ -115,8 +123,7 @@ internal class VersionControl(
                         InformationHelper.getApplicationCategory(applicationUniqueToken),
                         InformationHelper.getApplicationVersion(context),
                         AppExtraInfo(VasUser.getSession(context))
-                    )
-                    , commonCallStatus = AyanCommonCallStatus {
+                    ), commonCallStatus = AyanCommonCallStatus {
                         failure {
                             Toast.makeText(
                                 context,
