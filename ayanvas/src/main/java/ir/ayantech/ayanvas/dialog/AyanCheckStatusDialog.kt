@@ -83,6 +83,7 @@ class AyanCheckStatusDialog(
             startSubscription(activity, applicationUniqueToken, EndUserStatus.FirstPage, isProduction, callback)
         } else {
             AyanApi(
+                activity,
                 { VasUser.getSession(activity) },
                 "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
             ).ayanCall<ReportEndUserStatusOutput>(
@@ -162,6 +163,7 @@ class AyanCheckStatusDialog(
             callback(false)
         else
             AyanApi(
+                activity,
                 { VasUser.getSession(activity) },
                 "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
             ).ayanCall<DoesEndUserSubscribedOutput>(
@@ -181,6 +183,7 @@ class AyanCheckStatusDialog(
 
     fun logout(activity: Activity) {
         AyanApi(
+            activity,
             { VasUser.getSession(activity) },
             "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
         ).ayanCall<Void>(AyanCallStatus { }, EndPoint.ReportUnsubscription)
@@ -190,6 +193,7 @@ class AyanCheckStatusDialog(
 
     fun getTokenInfo(context: Context, callback: (TokenInfo) -> Unit) {
         AyanApi(
+            context,
             { VasUser.getSession(context) },
             "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/"
         ).ayanCall<TokenInfo>(

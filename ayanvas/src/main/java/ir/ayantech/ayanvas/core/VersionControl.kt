@@ -19,6 +19,7 @@ internal class VersionControl(
 ) {
 
     val ayanApi = AyanApi(
+        activity,
         defaultBaseUrl = defaultBaseUrl,
         commonCallStatus = ayanCommonCallStatus
     )
@@ -77,6 +78,7 @@ internal class VersionControl(
 
         fun shareApp(context: Context, applicationUniqueToken: String) {
             AyanApi(
+                context,
                 defaultBaseUrl = defaultBaseUrl
             )
                 .ayanCall<GetLastVersionOutput>(
@@ -109,7 +111,7 @@ internal class VersionControl(
             applicationUniqueToken: String,
             callback: (downloadLink: String) -> Unit
         ) {
-            AyanApi(defaultBaseUrl = defaultBaseUrl)
+            AyanApi(context, defaultBaseUrl = defaultBaseUrl)
                 .ayanCall<GetLastVersionOutput>(
                     AyanCallStatus {
                         success {
