@@ -101,7 +101,7 @@ internal class AuthenticationActivity : SupportActivity() {
     private fun initializeBatch() {
         Batch.onStart(this)
         Batch.User.editor()
-            .setAttribute("INSTALL", getApplicationUniqueToken())
+            .setAttribute("INSTALL", getApplicationUniqueToken() ?: "")
             .save()
     }
 
@@ -135,7 +135,7 @@ internal class AuthenticationActivity : SupportActivity() {
                     getApplicationName(this),
                     getApplicationType(this),
                     VasUser.getApplicationUniqueId(this@AuthenticationActivity),
-                    getApplicationUniqueToken(),
+                    getApplicationUniqueToken() ?: "",
                     getApplicationVersion(this),
                     ReportNewDeviceExtraInfo(
                         packageName,

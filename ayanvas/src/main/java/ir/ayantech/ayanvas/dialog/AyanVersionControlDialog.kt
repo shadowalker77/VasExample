@@ -98,7 +98,7 @@ class AyanVersionControlDialog(
                             }
 
                             override fun onFailure(downloadId: Int, statusCode: Int, errMsg: String?) {
-                                Log.e("AyanVC:", errMsg)
+                                Log.e("AyanVC:", errMsg ?: "")
                                 dismiss()
                                 openUrl(context, getLastVersion.Link)
                                 callback(false)
