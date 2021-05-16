@@ -27,7 +27,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 internal class AuthenticationActivity : SupportActivity() {
 
-//    private lateinit var iabHelper: IabHelper
+    //    private lateinit var iabHelper: IabHelper
     private lateinit var waiterDialog: WaiterDialog
 
     companion object {
@@ -71,12 +71,7 @@ internal class AuthenticationActivity : SupportActivity() {
         }
     }
 
-    val ayanApi = AyanApi(
-        this,
-        { VasUser.getSession(this) },
-        "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/",
-        ayanCommonCallingStatus
-    )
+    lateinit var ayanApi: AyanApi
 
     private fun getApplicationIcon(): Drawable = packageManager.getApplicationIcon(packageName)
 
@@ -109,6 +104,12 @@ internal class AuthenticationActivity : SupportActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.ayan_vas_activity_authentication)
         initializeBatch()
+        ayanApi = AyanApi(
+            this,
+            { VasUser.getSession(this) },
+            "https://subscriptionmanager.vas.ayantech.ir/WebServices/App.svc/",
+            ayanCommonCallingStatus
+        )
         waiterDialog = WaiterDialog(this)
         iconIv.setImageDrawable(getApplicationIcon())
         wp10pbar.showProgressBar()
@@ -143,8 +144,7 @@ internal class AuthenticationActivity : SupportActivity() {
                         getApplicationVersion(this)
                     ),
                     getOperatorName(this)
-                )
-                , hasIdentity = false
+                ), hasIdentity = false
             )
         else if (getEndUserStatus() == EndUserStatus.SecondPage)
             loadRootFragment(
